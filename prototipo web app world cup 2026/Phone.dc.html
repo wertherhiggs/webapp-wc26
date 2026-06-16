@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+[data-mscroll]::-webkit-scrollbar{width:0;height:0;display:none}
+[data-mscroll]{scrollbar-width:none}
+[data-hscroll]::-webkit-scrollbar{height:0;display:none}
+[data-hscroll]{scrollbar-width:none}
+@keyframes mblink{0%,100%{opacity:1}50%{opacity:.35}}
+</style>
+</helmet>
+<div style="width:390px;height:820px;border-radius:42px;overflow:hidden;display:flex;flex-direction:column;font-family:'Noto Sans',-apple-system,sans-serif;background:{{ c.bg }};color:{{ c.text }};border:1px solid {{ c.border }};position:relative">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 22px 7px;flex-shrink:0">
+    <span style="font-size:14px;font-weight:700;color:{{ c.text }}">9:41</span>
+    <div style="display:flex;align-items:center;gap:7px;color:{{ c.text }}">
+      <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="4.5" y="5.5" width="3" height="6.5" rx="1"/><rect x="9" y="3" width="3" height="9" rx="1"/><rect x="13.5" y="0.5" width="3" height="11.5" rx="1"/></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M1 4.2C4.8 1 11.2 1 15 4.2"/><path d="M3.4 6.8C6 4.6 10 4.6 12.6 6.8"/><path d="M5.8 9.3C7.1 8.3 8.9 8.3 10.2 9.3"/><circle cx="8" cy="11" r="0.6" fill="currentColor"/></svg>
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="0.6" y="0.6" width="20" height="10.8" rx="2.6" stroke="currentColor" stroke-width="1.1"/><rect x="2.2" y="2.2" width="15" height="7.6" rx="1.2" fill="currentColor"/><rect x="22" y="4" width="1.6" height="4" rx="0.8" fill="currentColor"/></svg>
+    </div>
+  </div>
+
+  <div data-mscroll style="flex:1;overflow-y:auto;overflow-x:hidden;padding:4px 16px 10px">
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;padding:8px 2px 16px">
+        <div>
+          <div style="font-size:12px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:{{ c.muted }}">Lunedì 15 giugno</div>
+          <div style="font-size:28px;font-weight:900;letter-spacing:-0.02em;color:{{ c.text }}">Oggi</div>
+        </div>
+        <div style="display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:#E8614A;color:#fff;font-size:12px;font-weight:700">
+          <span style="width:7px;height:7px;border-radius:999px;background:#fff;display:inline-block;animation:mblink 1.4s infinite"></span>1 Live ora
+        </div>
+      </div>
+
+      <sc-if value="{{ showFavCountdown }}" hint-placeholder-val="{{ true }}">
+      <div style="background:#111111;border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;margin-bottom:22px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#F4C94B"><svg width="12" height="12" viewBox="0 0 24 24" fill="#F4C94B"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 17l-5 2.6 1-5.8L3.8 9.7l5.8-.8z"/></svg>Prossima preferita</span>
+          <span style="font-size:11px;font-weight:700;color:#7A7A74">Conto alla rovescia</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px">
+          <div style="display:flex;align-items:center;gap:7px"><div style="{{ favHome.flag }}"></div><span style="font-size:16px;font-weight:900;color:#fff">{{ favHome.code }}</span><svg width="13" height="13" viewBox="0 0 24 24" fill="#F4C94B"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 17l-5 2.6 1-5.8L3.8 9.7l5.8-.8z"/></svg></div>
+          <span style="font-size:12px;font-weight:700;color:#6E6E68">VS</span>
+          <div style="display:flex;align-items:center;gap:7px"><span style="font-size:16px;font-weight:900;color:#fff">{{ favAway.code }}</span><div style="{{ favAway.flag }}"></div></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:-4px"><span style="font-size:11px;font-weight:500;color:#8E8E86">Perché segui <span style="color:#D8D7D1;font-weight:700">{{ favTeamName }}</span></span></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+          <div style="background:#222220;border-radius:14px;padding:10px 4px;text-align:center"><div style="font-size:26px;font-weight:900;color:#F4C94B;line-height:1">{{ cd.daysStr }}</div><div style="font-size:9px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:#7A7A74;margin-top:4px">Giorni</div></div>
+          <div style="background:#222220;border-radius:14px;padding:10px 4px;text-align:center"><div style="font-size:26px;font-weight:900;color:#F4C94B;line-height:1">{{ cd.h }}</div><div style="font-size:9px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:#7A7A74;margin-top:4px">Ore</div></div>
+          <div style="background:#222220;border-radius:14px;padding:10px 4px;text-align:center"><div style="font-size:26px;font-weight:900;color:#F4C94B;line-height:1">{{ cd.m }}</div><div style="font-size:9px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:#7A7A74;margin-top:4px">Min</div></div>
+          <div style="background:#222220;border-radius:14px;padding:10px 4px;text-align:center"><div style="font-size:26px;font-weight:900;color:#F4C94B;line-height:1">{{ cd.s }}</div><div style="font-size:9px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:#7A7A74;margin-top:4px">Sec</div></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <span style="font-size:13px;font-weight:500;color:#B6B6AE">Mar 16 giu &middot; 21:00 &middot; RAI 1</span>
+          <span style="padding:4px 9px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:#2D9E4A;color:#fff">In chiaro RAI</span>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ noFav }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#111111;border-radius:24px;padding:26px 22px;display:flex;flex-direction:column;align-items:center;gap:11px;margin-bottom:22px;text-align:center">
+          <span style="width:48px;height:48px;border-radius:14px;background:#222220;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F4C94B" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 17l-5 2.6 1-5.8L3.8 9.7l5.8-.8z"/></svg></span>
+          <div style="font-size:15px;font-weight:700;color:#fff">Nessuna preferita seguita</div>
+          <div style="font-size:13px;color:#9A9A92;max-width:250px;line-height:1.5">Il conto alla rovescia mostra la prossima partita delle tue squadre preferite. Seguine una per attivarlo.</div>
+          <div onClick="{{ goPrefBtn }}" style="margin-top:5px;padding:11px 20px;border-radius:999px;background:#F4C94B;color:#111;font-size:13px;font-weight:700;cursor:pointer">Segui una squadra</div>
+        </div>
+      </sc-if>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <span style="font-size:20px;font-weight:900;letter-spacing:-0.01em;color:{{ c.text }}">Partite di oggi</span>
+        <span style="font-size:13px;font-weight:700;color:{{ c.muted }}">3 gare</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+        <sc-for list="{{ todayMatches }}" as="m" hint-placeholder-count="3">
+          <dc-import name="MatchCard" m="{{ m }}" c="{{ c }}" hint-size="100%,150px"></dc-import>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <span style="font-size:20px;font-weight:900;letter-spacing:-0.01em;color:{{ c.text }}">Ultime giocate</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px">
+        <sc-for list="{{ recentMatches }}" as="m" hint-placeholder-count="2">
+          <dc-import name="MatchCard" m="{{ m }}" c="{{ c }}" hint-size="100%,150px"></dc-import>
+        </sc-for>
+        <div style="display:flex;align-items:center;justify-content:space-between;background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:20px;padding:14px 16px;cursor:pointer">
+          <div style="display:flex;align-items:center;gap:11px">
+            <span style="width:34px;height:34px;border-radius:10px;background:#E84242;display:flex;align-items:center;justify-content:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
+            <div><div style="font-size:14px;font-weight:700;color:{{ c.text }}">Rivedi gli highlights</div><div style="font-size:12px;color:{{ c.muted }}">Tutti i gol su YouTube</div></div>
+          </div>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{ c.muted }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:12px;background:{{ c.surface }};border-radius:20px;padding:15px 16px">
+        <span style="width:36px;height:36px;border-radius:10px;background:#2D9E4A;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M9 21h6" stroke-linecap="round"/></svg></span>
+        <div><div style="font-size:14px;font-weight:700;color:{{ c.text }}">47 partite in chiaro su RAI</div><div style="font-size:12.5px;line-height:1.5;color:{{ c.muted }}">Le gare gratuite sono segnalate con il badge verde. Attiva le notifiche per non perderle.</div></div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isCal }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column">
+      <div style="padding:8px 2px 14px"><div style="font-size:28px;font-weight:900;letter-spacing:-0.02em;color:{{ c.text }}">Calendario</div></div>
+      <div data-hscroll style="display:flex;gap:8px;overflow-x:auto;padding:2px 0 14px;margin:0 -16px;padding-left:16px;padding-right:16px">
+        <sc-for list="{{ calChips }}" as="ch" hint-placeholder-count="5">
+          <div onClick="{{ ch.go }}" style="{{ ch.style }}">{{ ch.label }}</div>
+        </sc-for>
+      </div>
+      <div onClick="{{ toggleRai }}" style="display:flex;align-items:center;justify-content:space-between;background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:16px;padding:13px 15px;margin-bottom:18px;cursor:pointer">
+        <div style="display:flex;align-items:center;gap:10px"><span style="width:9px;height:9px;border-radius:3px;background:#2D9E4A;display:inline-block"></span><span style="font-size:14px;font-weight:700;color:{{ c.text }}">Solo in chiaro RAI</span></div>
+        <div style="{{ raiTrack }}"><div style="{{ raiKnob }}"></div></div>
+      </div>
+      <sc-if value="{{ calEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:48px 20px;text-align:center">
+          <span style="width:56px;height:56px;border-radius:18px;background:{{ c.surface }};display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{ c.muted }}" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4" stroke-linecap="round"/></svg></span>
+          <div style="font-size:16px;font-weight:700;color:{{ c.text }}">Nessuna partita</div>
+          <div style="font-size:13px;color:{{ c.muted }};max-width:230px">Nessuna gara corrisponde ai filtri selezionati. Prova a rimuovere qualche filtro.</div>
+        </div>
+      </sc-if>
+      <sc-for list="{{ calDays }}" as="day" hint-placeholder-count="2">
+        <div style="margin-bottom:20px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><span style="font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:{{ c.muted }}">{{ day.label }}</span><div style="flex:1;height:0.5px;background:{{ c.border }}"></div></div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ day.matches }}" as="m" hint-placeholder-count="2"><dc-import name="MatchCard" m="{{ m }}" c="{{ c }}" hint-size="100%,150px"></dc-import></sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isClass }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column">
+      <div style="padding:8px 2px 14px"><div style="font-size:28px;font-weight:900;letter-spacing:-0.02em;color:{{ c.text }}">Classifiche</div></div>
+      <div style="display:flex;gap:4px;background:{{ c.surface }};border-radius:14px;padding:4px;margin-bottom:18px">
+        <div onClick="{{ goGironi }}" style="{{ segGironi }}">Gironi</div>
+        <div onClick="{{ goMarcatori }}" style="{{ segMarcatori }}">Marcatori</div>
+      </div>
+
+      <sc-if value="{{ isGironi }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+          <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:24px;padding:6px 14px 10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 2px 9px">
+              <span style="font-size:16px;font-weight:900;color:{{ c.text }}">{{ g.name }}</span>
+              <div style="display:flex;gap:7px;font-size:11px;font-weight:700;color:{{ c.muted }};width:158px;justify-content:space-between;text-align:center">
+                <span style="width:16px">G</span><span style="width:16px">V</span><span style="width:16px">N</span><span style="width:16px">P</span><span style="width:18px">GF</span><span style="width:18px">GS</span><span style="width:20px;color:{{ c.text }}">Pt</span>
+              </div>
+            </div>
+            <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+              <div onClick="{{ r.open }}" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-top:0.5px solid {{ c.border }};cursor:pointer">
+                <span style="width:3px;height:22px;border-radius:999px;background:{{ r.barColor }};flex-shrink:0"></span>
+                <span style="font-size:12px;font-weight:700;color:{{ c.muted }};width:12px">{{ r.pos }}</span>
+                <div style="{{ r.team.flag }}"></div>
+                <span style="font-size:14px;font-weight:900;color:{{ c.text }};flex:1">{{ r.team.code }}</span>
+                <div style="display:flex;gap:7px;font-size:12.5px;font-weight:500;color:{{ c.muted }};width:158px;justify-content:space-between;text-align:center">
+                  <span style="width:16px">{{ r.g }}</span><span style="width:16px">{{ r.v }}</span><span style="width:16px">{{ r.n }}</span><span style="width:16px">{{ r.p }}</span><span style="width:18px">{{ r.gf }}</span><span style="width:18px">{{ r.gs }}</span><span style="width:20px;font-weight:900;color:{{ c.text }}">{{ r.pt }}</span>
+                </div>
+              </div>
+            </sc-for>
+            <div style="display:flex;align-items:center;gap:14px;padding:11px 2px 4px;border-top:0.5px solid {{ c.border }}">
+              <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;color:{{ c.muted }}"><span style="width:8px;height:8px;border-radius:999px;background:#3EC8C0"></span>Qualificate</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;color:{{ c.muted }}"><span style="width:8px;height:8px;border-radius:999px;background:#F4C94B"></span>Ripescaggio</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isMarcatori }}" hint-placeholder-val="{{ false }}">
+      <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:24px;padding:6px 16px">
+        <sc-for list="{{ scorersVm }}" as="s" hint-placeholder-count="6">
+          <div onClick="{{ s.open }}" style="display:flex;align-items:center;gap:12px;padding:13px 0;border-top:0.5px solid {{ c.border }};cursor:pointer">
+            <span style="{{ s.rankStyle }}">{{ s.rank }}</span>
+            <div style="{{ s.team.flag }}"></div>
+            <div style="flex:1"><div style="font-size:15px;font-weight:900;color:{{ c.text }}">{{ s.name }}</div><div style="font-size:12px;color:{{ c.muted }}">{{ s.team.name }}</div></div>
+            <div style="display:flex;align-items:baseline;gap:4px"><span style="font-size:22px;font-weight:900;color:#E8614A">{{ s.goals }}</span><span style="font-size:11px;font-weight:700;color:{{ c.muted }}">gol</span></div>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 2px 14px">
+        <div onClick="{{ back }}" style="display:flex;align-items:center;gap:6px;cursor:pointer;color:{{ c.text }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg><span style="font-size:14px;font-weight:700">Indietro</span></div>
+        <div onClick="{{ toggleDetailFav }}" style="cursor:pointer;width:40px;height:40px;border-radius:999px;background:{{ c.surface }};display:flex;align-items:center;justify-content:center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="{{ detailStarFill }}" stroke="{{ detailStarStroke }}" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 17l-5 2.6 1-5.8L3.8 9.7l5.8-.8z"/></svg>
+        </div>
+      </div>
+
+      <div style="background:#111111;border-radius:24px;padding:20px 18px;display:flex;flex-direction:column;gap:18px;margin-bottom:20px">
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px">
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:{{ d.statusBg }};color:{{ d.statusColor }};font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase">
+            <sc-if value="{{ d.isLive }}" hint-placeholder-val="{{ true }}"><span style="width:6px;height:6px;border-radius:999px;background:#fff;display:inline-block;animation:mblink 1.4s infinite"></span></sc-if>{{ d.statusLabel }}
+          </span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:10px"><div style="{{ dHomeFlagBig }}"></div><span style="font-size:15px;font-weight:900;color:#fff">{{ d.home.name }}</span></div>
+          <div style="display:flex;align-items:center;gap:12px"><span style="font-size:44px;font-weight:900;color:#F4C94B;line-height:1">{{ d.hs }}</span><span style="font-size:24px;font-weight:700;color:#5A5A56">-</span><span style="font-size:44px;font-weight:900;color:#F4C94B;line-height:1">{{ d.as }}</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:10px"><div style="{{ dAwayFlagBig }}"></div><span style="font-size:15px;font-weight:900;color:#fff">{{ d.away.name }}</span></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding-top:4px">
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;background:#222220;color:#E6E5DF;font-size:12px;font-weight:700"><span style="width:7px;height:7px;border-radius:2px;background:{{ d.channel.color }}"></span>{{ d.channel.name }} &middot; {{ d.time }}</span>
+          <sc-if value="{{ d.rai }}" hint-placeholder-val="{{ false }}"><span style="padding:5px 10px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:#2D9E4A;color:#fff">In chiaro RAI</span></sc-if>
+        </div>
+        <sc-if value="{{ d.hasStadium }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ goStadi }}" style="display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9A9A92" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg><span style="font-size:12px;font-weight:700;color:#9A9A92">{{ d.stadium }}</span></div>
+        </sc-if>
+      </div>
+
+      <div style="font-size:16px;font-weight:900;color:{{ c.text }};margin:0 2px 14px">Cronaca</div>
+      <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:24px;padding:18px 16px;margin-bottom:20px">
+        <sc-for list="{{ dEvents }}" as="e" hint-placeholder-count="5">
+          <sc-if value="{{ e.isDivider }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:10px;padding:6px 0 12px"><div style="flex:1;height:0.5px;background:{{ c.border }}"></div><span style="font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:{{ c.muted }}">{{ e.text }}</span><div style="flex:1;height:0.5px;background:{{ c.border }}"></div></div>
+          </sc-if>
+          <sc-if value="{{ e.isEvent }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;gap:12px;align-items:flex-start;padding-bottom:14px">
+              <span style="width:34px;font-size:13px;font-weight:900;color:{{ c.text }};text-align:right;flex-shrink:0">{{ e.min }}</span>
+              <span style="width:26px;height:26px;border-radius:8px;background:{{ e.iconBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0">{{ e.icon }}</span>
+              <div style="flex:1;padding-top:2px"><div style="font-size:14px;font-weight:700;color:{{ c.text }}">{{ e.text }}</div><sc-if value="{{ e.hasSub }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:{{ c.muted }};margin-top:1px">{{ e.sub }}</div></sc-if></div>
+            </div>
+          </sc-if>
+        </sc-for>
+      </div>
+
+      <div style="font-size:16px;font-weight:900;color:{{ c.text }};margin:0 2px 14px">Formazioni</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:20px;padding:14px 13px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="{{ dHome.team.flag }}"></div><span style="font-size:13px;font-weight:900;color:{{ c.text }}">{{ dHome.module }}</span></div>
+          <sc-for list="{{ dHome.players }}" as="p" hint-placeholder-count="11"><div style="font-size:12.5px;color:{{ c.muted }};padding:4px 0;border-top:0.5px solid {{ c.border }}">{{ p }}</div></sc-for>
+        </div>
+        <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:20px;padding:14px 13px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><div style="{{ dAway.team.flag }}"></div><span style="font-size:13px;font-weight:900;color:{{ c.text }}">{{ dAway.module }}</span></div>
+          <sc-for list="{{ dAway.players }}" as="p" hint-placeholder-count="11"><div style="font-size:12.5px;color:{{ c.muted }};padding:4px 0;border-top:0.5px solid {{ c.border }}">{{ p }}</div></sc-for>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;background:#E8614A;border-radius:999px;padding:15px;cursor:pointer;margin-bottom:6px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg><span style="font-size:15px;font-weight:700;color:#fff;letter-spacing:0.02em">Rivedi gli highlights</span>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isPron }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column">
+      <div style="padding:8px 2px 14px"><div style="font-size:28px;font-weight:900;letter-spacing:-0.02em;color:{{ c.text }}">Pronostici</div></div>
+      <div style="background:#8B5CF6;border-radius:24px;padding:18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+        <div><div style="font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.75)">Il tuo punteggio</div><div style="font-size:44px;font-weight:900;color:#fff;line-height:1.05">47<span style="font-size:18px;font-weight:700;color:rgba(255,255,255,0.8)"> pt</span></div></div>
+        <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.75)">Posizione</div><div style="font-size:24px;font-weight:900;color:#A8E040">#12</div><div style="font-size:11px;color:rgba(255,255,255,0.7)">su 230 amici</div></div>
+      </div>
+
+      <div style="font-size:18px;font-weight:900;color:{{ c.text }};margin:0 2px 12px">Da pronosticare</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+        <sc-for list="{{ predMatches }}" as="m" hint-placeholder-count="3">
+          <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:24px;padding:16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><span style="font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:{{ c.muted }}">{{ m.time }} &middot; {{ m.channel.name }}</span><sc-if value="{{ m.rai }}" hint-placeholder-val="{{ false }}"><span style="padding:3px 8px;border-radius:999px;font-size:9px;font-weight:700;text-transform:uppercase;background:#2D9E4A;color:#fff">RAI</span></sc-if></div>
+            <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="{{ m.home.flag }}"></div><span style="font-size:13px;font-weight:700;color:{{ c.text }}">{{ m.home.code }}</span></div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                  <div onClick="{{ m.incH }}" style="width:28px;height:28px;border-radius:999px;background:{{ c.surface }};display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;font-weight:700;color:{{ c.text }}">+</div>
+                  <span style="font-size:26px;font-weight:900;color:{{ c.text }};min-width:24px;text-align:center">{{ m.ph }}</span>
+                  <div onClick="{{ m.decH }}" style="width:28px;height:28px;border-radius:999px;background:{{ c.surface }};display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:700;color:{{ c.muted }}">&minus;</div>
+                </div>
+                <span style="font-size:20px;font-weight:700;color:{{ c.muted }}">:</span>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                  <div onClick="{{ m.incA }}" style="width:28px;height:28px;border-radius:999px;background:{{ c.surface }};display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;font-weight:700;color:{{ c.text }}">+</div>
+                  <span style="font-size:26px;font-weight:900;color:{{ c.text }};min-width:24px;text-align:center">{{ m.pa }}</span>
+                  <div onClick="{{ m.decA }}" style="width:28px;height:28px;border-radius:999px;background:{{ c.surface }};display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;font-weight:700;color:{{ c.muted }}">&minus;</div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="{{ m.away.flag }}"></div><span style="font-size:13px;font-weight:700;color:{{ c.text }}">{{ m.away.code }}</span></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;padding-top:13px;border-top:0.5px solid {{ c.border }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2D9E4A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg><span style="font-size:12px;font-weight:700;color:#2D9E4A">Pronostico salvato</span></div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="font-size:18px;font-weight:900;color:{{ c.text }};margin:0 2px 12px">Storico</div>
+      <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:24px;padding:4px 16px">
+        <sc-for list="{{ predHistory }}" as="h" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 0;border-top:0.5px solid {{ c.border }}">
+            <div><div style="font-size:14px;font-weight:900;color:{{ c.text }}">{{ h.label }}</div><div style="font-size:12px;color:{{ c.muted }}">{{ h.you }}</div></div>
+            <div style="display:flex;align-items:center;gap:10px"><span style="padding:4px 9px;border-radius:999px;font-size:10px;font-weight:700;text-transform:uppercase;background:{{ h.tagBg }};color:{{ h.tagColor }}">{{ h.tag }}</span><span style="font-size:16px;font-weight:900;color:{{ h.ptColor }};min-width:32px;text-align:right">{{ h.pts }}</span></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isTab }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column">
+      <div style="padding:8px 2px 6px"><div style="font-size:28px;font-weight:900;letter-spacing:-0.02em;color:{{ c.text }}">Tabellone</div><div style="font-size:13px;color:{{ c.muted }};margin-top:2px">Scorri in orizzontale &rarr;</div></div>
+      <div data-hscroll style="display:flex;gap:14px;overflow-x:auto;padding:18px 16px 18px;margin:0 -16px">
+        <sc-for list="{{ bracket }}" as="rnd" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;justify-content:space-around;gap:14px;flex-shrink:0;width:188px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:{{ c.muted }};text-align:center;margin-bottom:2px">{{ rnd.name }}</div>
+            <sc-for list="{{ rnd.matches }}" as="bm" hint-placeholder-count="2">
+              <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:16px;padding:12px 13px;display:flex;flex-direction:column;gap:9px">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div style="display:flex;align-items:center;gap:9px"><div style="{{ bm.h.flag }}"></div><span style="{{ bm.hStyle }}">{{ bm.h.code }}</span></div><span style="{{ bm.hScoreStyle }}">{{ bm.hScore }}</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div style="display:flex;align-items:center;gap:9px"><div style="{{ bm.a.flag }}"></div><span style="{{ bm.aStyle }}">{{ bm.a.code }}</span></div><span style="{{ bm.aScoreStyle }}">{{ bm.aScore }}</span></div>
+                <sc-if value="{{ bm.hasNote }}" hint-placeholder-val="{{ false }}"><div style="font-size:10px;font-weight:700;color:{{ c.muted }};text-align:center;padding-top:5px;border-top:0.5px solid {{ c.border }}">{{ bm.note }}</div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isPref }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column">
+      <div style="padding:8px 2px 14px"><div style="font-size:28px;font-weight:900;letter-spacing:-0.02em;color:{{ c.text }}">Preferiti</div></div>
+
+      <div style="font-size:16px;font-weight:900;color:{{ c.text }};margin:0 2px 12px">Squadre seguite</div>
+      <sc-if value="{{ prefEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:34px 20px;text-align:center;background:{{ c.card }};border:0.5px dashed {{ c.border }};border-radius:24px;margin-bottom:22px">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ c.muted }}" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 17l-5 2.6 1-5.8L3.8 9.7l5.8-.8z"/></svg>
+          <div style="font-size:15px;font-weight:700;color:{{ c.text }}">Nessuna squadra seguita</div>
+          <div style="font-size:13px;color:{{ c.muted }};max-width:220px">Tocca la stella su una squadra per seguirne le partite.</div>
+        </div>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px">
+        <sc-for list="{{ followed }}" as="t" hint-placeholder-count="2">
+          <div onClick="{{ t.open }}" style="display:flex;align-items:center;gap:13px;background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:20px;padding:13px 15px;cursor:pointer">
+            <div style="{{ t.team.flag }}"></div>
+            <div style="flex:1"><div style="font-size:15px;font-weight:900;color:{{ c.text }}">{{ t.team.name }}</div><div style="font-size:12px;color:{{ c.muted }}">{{ t.sub }}</div></div>
+            <div onClick="{{ t.remove }}" style="cursor:pointer;width:36px;height:36px;border-radius:999px;background:{{ c.surface }};display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="#F4C94B" stroke="#F4C94B" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 17l-5 2.6 1-5.8L3.8 9.7l5.8-.8z"/></svg></div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div onClick="{{ goPron }}" style="display:flex;align-items:center;justify-content:space-between;background:#8B5CF6;border-radius:20px;padding:16px;margin-bottom:22px;cursor:pointer">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><div><div style="font-size:15px;font-weight:900;color:#fff">I tuoi pronostici</div><div style="font-size:12px;color:rgba(255,255,255,0.8)">47 punti &middot; #12 in classifica</div></div></div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </div>
+
+      <div style="font-size:16px;font-weight:900;color:{{ c.text }};margin:0 2px 12px">Esplora</div>
+      <div onClick="{{ goStadi }}" style="display:flex;align-items:center;justify-content:space-between;background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:20px;padding:14px 15px;margin-bottom:22px;cursor:pointer">
+        <div style="display:flex;align-items:center;gap:12px"><span style="width:38px;height:38px;border-radius:11px;background:#3EC8C0;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span><div><div style="font-size:15px;font-weight:900;color:{{ c.text }}">Stadi e città</div><div style="font-size:12px;color:{{ c.muted }}">16 sedi in Canada, USA e Messico</div></div></div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{ c.muted }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </div>
+
+      <div style="font-size:16px;font-weight:900;color:{{ c.text }};margin:0 2px 12px">Notifiche</div>
+      <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:20px;padding:4px 16px;margin-bottom:8px">
+        <div onClick="{{ toggleNotif }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;cursor:pointer">
+          <div style="flex:1"><div style="font-size:14px;font-weight:700;color:{{ c.text }}">Promemoria a mezzogiorno</div><div style="font-size:12px;color:{{ c.muted }}">Avviso il giorno della gara delle tue squadre</div></div>
+          <div style="{{ notifTrack }}"><div style="{{ notifKnob }}"></div></div>
+        </div>
+        <div onClick="{{ toggleNotif2 }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-top:0.5px solid {{ c.border }};cursor:pointer">
+          <div style="flex:1"><div style="font-size:14px;font-weight:700;color:{{ c.text }}">Gol in tempo reale</div><div style="font-size:12px;color:{{ c.muted }}">Notifica a ogni gol delle preferite</div></div>
+          <div style="{{ notif2Track }}"><div style="{{ notif2Knob }}"></div></div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isSquadra }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column">
+      <div onClick="{{ back }}" style="display:flex;align-items:center;gap:6px;padding:6px 2px 16px;cursor:pointer;color:{{ c.text }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg><span style="font-size:14px;font-weight:700">Indietro</span></div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:13px;margin-bottom:18px">
+        <div style="{{ sqBigFlag }}"></div>
+        <div style="text-align:center"><div style="font-size:26px;font-weight:900;letter-spacing:-0.01em;color:{{ c.text }}">{{ prof.team.name }}</div><div style="font-size:13px;color:{{ c.muted }};margin-top:3px">Gruppo {{ prof.group }} &middot; FIFA World Cup 2026</div></div>
+      </div>
+      <div onClick="{{ toggleSquadraFav }}" style="{{ sqFollowStyle }};margin-bottom:26px"><svg width="17" height="17" viewBox="0 0 24 24" fill="{{ sqStarFill }}" stroke="{{ sqStarStroke }}" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 17l-5 2.6 1-5.8L3.8 9.7l5.8-.8z"/></svg>{{ sqFollowLabel }}</div>
+
+      <div style="font-size:16px;font-weight:900;color:{{ c.text }};margin:0 2px 12px">Prossime gare</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:26px">
+        <sc-for list="{{ squadraNext }}" as="m" hint-placeholder-count="2"><dc-import name="MatchCard" m="{{ m }}" c="{{ c }}" hint-size="100%,150px"></dc-import></sc-for>
+      </div>
+
+      <div style="font-size:16px;font-weight:900;color:{{ c.text }};margin:0 2px 12px">Ultime gare</div>
+      <sc-if value="{{ sqHasLast }}" hint-placeholder-val="{{ true }}">
+      <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:24px;padding:4px 16px;margin-bottom:26px">
+        <sc-for list="{{ prof.last }}" as="l" hint-placeholder-count="2">
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 0;border-top:0.5px solid {{ c.border }}">
+            <span style="width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;background:{{ l.resBg }};color:{{ l.resColor }}">{{ l.res }}</span>
+            <div style="{{ l.opp.flag }}"></div>
+            <span style="flex:1;font-size:14px;font-weight:700;color:{{ c.text }}">{{ l.opp.code }}</span>
+            <span style="font-size:16px;font-weight:900;color:{{ c.text }}">{{ l.score }}</span>
+            <span style="font-size:12px;color:{{ c.muted }};width:44px;text-align:right">{{ l.when }}</span>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+      <sc-if value="{{ sqNoLast }}" hint-placeholder-val="{{ false }}">
+        <div style="background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:24px;padding:28px;text-align:center;margin-bottom:26px;font-size:13px;color:{{ c.muted }}">Nessuna gara giocata finora.</div>
+      </sc-if>
+
+      <div style="font-size:16px;font-weight:900;color:{{ c.text }};margin:0 2px 12px">Notizie sulla nazionale</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ prof.news }}" as="n" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:12px;background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:18px;padding:14px 15px;cursor:pointer">
+            <span style="width:34px;height:34px;border-radius:10px;background:{{ c.surface }};display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ c.text }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></span>
+            <div style="flex:1"><div style="font-size:14px;font-weight:700;color:{{ c.text }}">{{ n.name }}</div><div style="font-size:12px;color:{{ c.muted }}">{{ n.site }}</div></div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ c.muted }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isStadi }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column">
+      <div onClick="{{ back }}" style="display:flex;align-items:center;gap:6px;padding:6px 2px 10px;cursor:pointer;color:{{ c.text }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg><span style="font-size:14px;font-weight:700">Indietro</span></div>
+      <div style="padding:0 2px 14px"><div style="font-size:28px;font-weight:900;letter-spacing:-0.02em;color:{{ c.text }}">Stadi e città</div><div style="font-size:13px;color:{{ c.muted }};margin-top:2px">16 sedi &middot; 3 paesi ospitanti</div></div>
+
+      <div style="position:relative;height:212px;border-radius:24px;overflow:hidden;border:0.5px solid {{ c.border }};margin-bottom:12px;background:{{ mapBg }};background-image:radial-gradient(rgba(120,140,135,0.28) 1px, transparent 1px);background-size:13px 13px">
+        <div style="position:absolute;left:16%;top:6%;width:62%;height:30%;border-radius:40% 50% 44% 50%;background:rgba(62,200,192,0.30)"></div>
+        <div style="position:absolute;left:10%;top:33%;width:70%;height:38%;border-radius:46% 42% 50% 44%;background:rgba(244,201,75,0.32)"></div>
+        <div style="position:absolute;left:14%;top:66%;width:42%;height:28%;border-radius:50% 46% 44% 50%;background:rgba(232,97,74,0.32)"></div>
+        <div style="position:absolute;left:30%;top:18%;width:11px;height:11px;border-radius:999px;background:#3EC8C0;border:2px solid #fff"></div>
+        <div style="position:absolute;left:62%;top:24%;width:11px;height:11px;border-radius:999px;background:#3EC8C0;border:2px solid #fff"></div>
+        <div style="position:absolute;left:24%;top:48%;width:11px;height:11px;border-radius:999px;background:#F4C94B;border:2px solid #fff"></div>
+        <div style="position:absolute;left:46%;top:42%;width:11px;height:11px;border-radius:999px;background:#F4C94B;border:2px solid #fff"></div>
+        <div style="position:absolute;left:68%;top:52%;width:11px;height:11px;border-radius:999px;background:#F4C94B;border:2px solid #fff"></div>
+        <div style="position:absolute;left:30%;top:78%;width:11px;height:11px;border-radius:999px;background:#E8614A;border:2px solid #fff"></div>
+        <div style="position:absolute;left:44%;top:84%;width:11px;height:11px;border-radius:999px;background:#E8614A;border:2px solid #fff"></div>
+        <span style="position:absolute;left:14px;bottom:12px;font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:{{ c.muted }};background:{{ c.card }};padding:5px 9px;border-radius:999px">Nord America &middot; anteprima</span>
+      </div>
+      <div style="display:flex;gap:16px;justify-content:center;margin-bottom:18px">
+        <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:{{ c.muted }}"><span style="width:9px;height:9px;border-radius:999px;background:#3EC8C0"></span>Canada</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:{{ c.muted }}"><span style="width:9px;height:9px;border-radius:999px;background:#F4C94B"></span>Stati Uniti</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:{{ c.muted }}"><span style="width:9px;height:9px;border-radius:999px;background:#E8614A"></span>Messico</span>
+      </div>
+
+      <div data-hscroll style="display:flex;gap:8px;overflow-x:auto;padding:0 16px 16px;margin:0 -16px">
+        <sc-for list="{{ stadiChips }}" as="ch" hint-placeholder-count="4"><div onClick="{{ ch.go }}" style="{{ ch.style }}">{{ ch.label }}</div></sc-for>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ stadiCities }}" as="s" hint-placeholder-count="8">
+          <div style="display:flex;align-items:center;gap:13px;background:{{ c.card }};border:0.5px solid {{ c.border }};border-radius:18px;padding:13px 15px">
+            <span style="width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:{{ s.dot }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span>
+            <div style="flex:1"><div style="font-size:15px;font-weight:900;color:{{ c.text }}">{{ s.city }}</div><div style="font-size:12px;color:{{ c.muted }}">{{ s.stadium }}</div></div>
+            <div style="text-align:right"><div style="font-size:20px;font-weight:900;color:#E8614A;line-height:1">{{ s.matches }}</div><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:{{ c.muted }}">gare</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+
+  <div style="flex-shrink:0;padding:8px 12px 14px">
+    <div style="background:#111111;border-radius:20px;display:flex;justify-content:space-around;align-items:center;padding:10px 4px">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+        <div onClick="{{ n.go }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;flex:1;color:{{ n.color }}">
+          <div style="height:5px;display:flex;align-items:center;justify-content:center"><sc-if value="{{ n.active }}" hint-placeholder-val="{{ false }}"><span style="width:5px;height:5px;border-radius:999px;background:#F4C94B;display:block"></span></sc-if></div>
+          {{ n.icon }}
+          <span style="font-size:9.5px;font-weight:700;letter-spacing:0.01em">{{ n.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:820},&quot;screen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;calendario&quot;,&quot;dettaglio&quot;,&quot;classifiche&quot;,&quot;pronostici&quot;,&quot;tabellone&quot;,&quot;preferiti&quot;],&quot;default&quot;:&quot;home&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;}}">
+class Component extends DCLogic {
+  state = { screen: 'home', prev: 'home', now: Date.now(), favs: { ITA: true, BRA: true }, favMatch: { m1: true }, calFilter: 'tutti', raiOnly: false, clView: 'gironi', preds: {}, detailId: 'm1', notif: true, notif2: false, teamCode: 'ITA', stadiFilter: 'tutti' };
+
+  componentDidMount() {
+    if (this.props.screen) this.setState({ screen: this.props.screen, prev: this.props.screen });
+    this.target = Date.now() + (28 * 3600 + 13 * 60 + 5) * 1000;
+    this._t = setInterval(() => this.setState({ now: Date.now() }), 1000);
+  }
+  componentWillUnmount() { if (this._t) clearInterval(this._t); }
+
+  go(s) { this.setState({ screen: s, prev: s }); }
+  back() { this.setState({ screen: this.state.prev || 'home' }); }
+  goPron() { this.setState({ prev: this.state.screen, screen: 'pronostici' }); }
+  openDetail(id) { this.setState({ prev: this.state.screen, screen: 'dettaglio', detailId: id }); }
+  setCal(k) { this.setState({ calFilter: k }); }
+  toggleRai() { this.setState(s => ({ raiOnly: !s.raiOnly })); }
+  setCl(v) { this.setState({ clView: v }); }
+  toggleFav(code) { this.setState(s => { const f = { ...s.favs }; if (f[code]) delete f[code]; else f[code] = true; return { favs: f }; }); }
+  toggleDetailFav() { this.setState(s => { const f = { ...s.favMatch }; const id = s.detailId; if (f[id]) delete f[id]; else f[id] = true; return { favMatch: f }; }); }
+  toggleNotif() { this.setState(s => ({ notif: !s.notif })); }
+  toggleNotif2() { this.setState(s => ({ notif2: !s.notif2 })); }
+  bump(id, side, d) { this.setState(s => { const p = { ...s.preds }; const cur = p[id] || { h: 0, a: 0 }; const nv = { ...cur }; nv[side] = Math.max(0, Math.min(20, (nv[side] || 0) + d)); p[id] = nv; return { preds: p }; }); }
+
+  flag(spec) {
+    const base = { width: '34px', height: '24px', borderRadius: '4px', border: '0.5px solid rgba(120,120,120,0.4)', flexShrink: 0, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' };
+    if (spec.raw) return { ...base, background: spec.raw };
+    const colors = spec.colors, n = colors.length;
+    if (n === 1) return { ...base, background: colors[0] };
+    const deg = spec.dir === 'v' ? '90deg' : '180deg';
+    const seg = 100 / n;
+    const stops = colors.map((col, i) => `${col} ${(i * seg).toFixed(2)}% ${((i + 1) * seg).toFixed(2)}%`).join(',');
+    return { ...base, background: `linear-gradient(${deg},${stops})` };
+  }
+  bigFlag(spec) { return { ...this.flag(spec), width: '46px', height: '32px', borderRadius: '5px' }; }
+
+  teams() {
+    if (this._teams) return this._teams;
+    const f = (s) => this.flag(s); const cr = '#F4F3EE';
+    this._teams = {
+      ITA: { code: 'ITA', name: 'Italia', spec: { dir: 'v', colors: ['#1A8B4B', cr, '#E8614A'] } },
+      FRA: { code: 'FRA', name: 'Francia', spec: { dir: 'v', colors: ['#2E4DA7', cr, '#E84242'] } },
+      ESP: { code: 'ESP', name: 'Spagna', spec: { dir: 'h', colors: ['#E84242', '#F4C94B', '#E84242'] } },
+      GER: { code: 'GER', name: 'Germania', spec: { dir: 'h', colors: ['#1A1A1A', '#E84242', '#F4C94B'] } },
+      BRA: { code: 'BRA', name: 'Brasile', spec: { dir: 'h', colors: ['#1A8B4B', '#F4C94B', '#2E4DA7'] } },
+      ARG: { code: 'ARG', name: 'Argentina', spec: { dir: 'h', colors: ['#7DBEE8', cr, '#7DBEE8'] } },
+      POR: { code: 'POR', name: 'Portogallo', spec: { dir: 'v', colors: ['#1A6B3B', '#E84242'] } },
+      NED: { code: 'NED', name: 'Olanda', spec: { dir: 'h', colors: ['#E8614A', cr, '#2E4DA7'] } },
+      ENG: { code: 'ENG', name: 'Inghilterra', spec: { raw: `linear-gradient(#E84242,#E84242) center/100% 5px no-repeat, linear-gradient(#E84242,#E84242) center/5px 100% no-repeat, ${cr}` } },
+      USA: { code: 'USA', name: 'USA', spec: { dir: 'h', colors: ['#2E4DA7', cr, '#E84242'] } },
+      MEX: { code: 'MEX', name: 'Messico', spec: { dir: 'v', colors: ['#1A8B4B', cr, '#E84242'] } },
+      MAR: { code: 'MAR', name: 'Marocco', spec: { colors: ['#C0392B'] } },
+      SEN: { code: 'SEN', name: 'Senegal', spec: { dir: 'v', colors: ['#1A8B4B', '#F4C94B', '#E84242'] } },
+      CRO: { code: 'CRO', name: 'Croazia', spec: { raw: 'repeating-conic-gradient(#E84242 0 25%, #F4F3EE 0 50%) 0 0/14px 14px' } },
+      JPN: { code: 'JPN', name: 'Giappone', spec: { raw: `radial-gradient(circle at 50% 50%, #E84242 0 32%, transparent 33%), ${cr}` } },
+      CAN: { code: 'CAN', name: 'Canada', spec: { dir: 'v', colors: ['#E84242', cr, '#E84242'] } },
+    };
+    Object.values(this._teams).forEach(t => { t.flag = this.flag(t.spec); });
+    return this._teams;
+  }
+  T(code) { return this.teams()[code] || { code: code || '—', name: code || '—', flag: this.flag({ raw: 'repeating-linear-gradient(45deg,#888 0 5px,#aaa 5px 10px)' }) }; }
+
+  theme() {
+    const d = this.props.theme === 'dark';
+    return d
+      ? { name: 'dark', dark: true, bg: '#111111', surface: '#222220', card: '#2A2A2A', border: 'rgba(255,255,255,0.12)', text: '#F8F7F2', muted: '#999990' }
+      : { name: 'light', dark: false, bg: '#F8F7F2', surface: '#EDECE7', card: '#FFFFFF', border: '#D4D3CD', text: '#111111', muted: '#888880' };
+  }
+
+  rawMatches() {
+    return {
+      m1: { home: 'ITA', away: 'FRA', hs: 1, as: 1, status: 'live', minute: 67, time: '21:00', channel: { name: 'RAI 1', color: '#2D9E4A' }, rai: true, group: 'A', stadium: 'Toronto · BMO Field', sh: [{ name: 'Barella', min: "23'" }], sa: [{ name: 'Mbappé', min: "51'" }] },
+      m2: { home: 'ESP', away: 'GER', hs: 2, as: 0, status: 'ft', time: '18:00', channel: { name: 'Sky Sport', color: '#2E4DA7' }, rai: false, group: 'B', sh: [{ name: 'Yamal', min: "12'" }, { name: 'Morata', min: "60'" }], sa: [] },
+      m3: { home: 'BRA', away: 'ARG', status: 'sched', time: '23:00', channel: { name: 'RAI 2', color: '#2D9E4A' }, rai: true, group: 'C' },
+      m4: { home: 'USA', away: 'MEX', status: 'sched', time: '18:00', channel: { name: 'Sky Sport', color: '#2E4DA7' }, rai: false, group: 'D' },
+      m5: { home: 'ITA', away: 'NED', status: 'sched', time: '21:00', channel: { name: 'RAI 1', color: '#2D9E4A' }, rai: true, group: 'A' },
+      m6: { home: 'ENG', away: 'JPN', status: 'sched', time: '23:00', channel: { name: 'Sky Sport', color: '#2E4DA7' }, rai: false, group: 'F' },
+      r1: { home: 'POR', away: 'MAR', hs: 3, as: 1, status: 'ft', time: '18:00', channel: { name: 'RAI 2', color: '#2D9E4A' }, rai: true, group: 'E', sh: [{ name: 'Ronaldo', min: "9'" }, { name: 'Leão', min: "77'" }], sa: [{ name: 'Ziyech', min: "55'" }] },
+      r2: { home: 'NED', away: 'SEN', hs: 2, as: 1, status: 'ft', time: '21:00', channel: { name: 'Sky Sport', color: '#2E4DA7' }, rai: false, group: 'B', sh: [{ name: 'Gakpo', min: "30'" }, { name: 'Depay', min: "68'" }], sa: [{ name: 'Sarr', min: "82'" }] },
+    };
+  }
+
+  vm(id) {
+    const r = this.rawMatches()[id]; const c = this.theme();
+    const isLive = r.status === 'live', isFt = r.status === 'ft', isSched = r.status === 'sched';
+    let statusLabel, statusBg, statusColor;
+    if (isLive) { statusLabel = "Live " + r.minute + "'"; statusBg = '#E8614A'; statusColor = '#fff'; }
+    else if (isFt) { statusLabel = 'Finita'; statusBg = '#2A2A2A'; statusColor = '#CFCEC8'; }
+    else { statusLabel = 'In programma'; statusBg = c.surface; statusColor = c.muted; }
+    const sh = r.sh || [], sa = r.sa || [];
+    return {
+      id, status: r.status, isLive, isFt, home: this.T(r.home), away: this.T(r.away),
+      hs: r.hs, as: r.as, showScore: isLive || isFt, showTime: isSched,
+      time: r.time, channel: r.channel, rai: !!r.rai,
+      statusLabel, statusBg, statusColor, scorersHome: sh, scorersAway: sa,
+      hasFooter: (sh.length + sa.length) > 0, group: r.group, stadium: r.stadium, hasStadium: !!r.stadium,
+      open: () => this.openDetail(id),
+    };
+  }
+
+  groups() {
+    return [
+      { name: 'Gruppo A', rows: [
+        { code: 'ITA', g: 2, v: 2, n: 0, p: 0, gf: 4, gs: 1, pt: 6 },
+        { code: 'FRA', g: 2, v: 1, n: 0, p: 1, gf: 3, gs: 2, pt: 3 },
+        { code: 'CRO', g: 2, v: 1, n: 0, p: 1, gf: 2, gs: 3, pt: 3 },
+        { code: 'MAR', g: 2, v: 0, n: 0, p: 2, gf: 1, gs: 4, pt: 0 } ] },
+      { name: 'Gruppo B', rows: [
+        { code: 'ESP', g: 2, v: 2, n: 0, p: 0, gf: 5, gs: 1, pt: 6 },
+        { code: 'GER', g: 2, v: 1, n: 1, p: 0, gf: 4, gs: 2, pt: 4 },
+        { code: 'NED', g: 2, v: 0, n: 1, p: 1, gf: 2, gs: 3, pt: 1 },
+        { code: 'SEN', g: 2, v: 0, n: 0, p: 2, gf: 1, gs: 6, pt: 0 } ] },
+    ];
+  }
+  scorers() {
+    return [
+      { code: 'FRA', name: 'Mbappé', goals: 4 }, { code: 'ESP', name: 'Yamal', goals: 3 },
+      { code: 'POR', name: 'Ronaldo', goals: 3 }, { code: 'ITA', name: 'Retegui', goals: 2 },
+      { code: 'NED', name: 'Gakpo', goals: 2 }, { code: 'BRA', name: 'Vinícius', goals: 2 },
+    ];
+  }
+  events(id) {
+    if (id !== 'm1') return [{ kind: 'divider', text: 'Cronaca non disponibile' }];
+    return [
+      { kind: 'goal', side: 'home', min: "23'", text: 'Gol — Barella', sub: 'Assist di Dimarco' },
+      { kind: 'yellow', side: 'away', min: "38'", text: 'Ammonizione — Tchouaméni' },
+      { kind: 'divider', text: 'Intervallo · 1 - 0' },
+      { kind: 'goal', side: 'away', min: "51'", text: 'Gol — Mbappé', sub: 'Su calcio di rigore' },
+      { kind: 'sub', side: 'home', min: "60'", text: 'Cambio — Retegui ▸ Esposito' },
+      { kind: 'yellow', side: 'home', min: "64'", text: 'Ammonizione — Tonali' },
+    ];
+  }
+  lineups(id) {
+    return {
+      home: { code: 'ITA', module: '4-3-3', players: ['Donnarumma', 'Di Lorenzo', 'Bastoni', 'Calafiori', 'Dimarco', 'Barella', 'Locatelli', 'Tonali', 'Chiesa', 'Retegui', 'Politano'] },
+      away: { code: 'FRA', module: '4-2-3-1', players: ['Maignan', 'Koundé', 'Saliba', 'Upamecano', 'Hernández', 'Tchouaméni', 'Camavinga', 'Dembélé', 'Griezmann', 'Barcola', 'Mbappé'] },
+    };
+  }
+
+  openSquadra(code) { this.setState({ prev: this.state.screen, screen: 'squadra', teamCode: code }); }
+  goStadi() { this.setState({ prev: this.state.screen, screen: 'stadi' }); }
+  setStadiFilter(k) { this.setState({ stadiFilter: k }); }
+
+  profile(code) {
+    const t = this.T(code); const raw = this.rawMatches();
+    const nextIds = Object.keys(raw).filter(id => { const m = raw[id]; return (m.home === code || m.away === code) && (m.status === 'sched' || m.status === 'live'); });
+    const groupMap = { ITA: 'A', FRA: 'A', CRO: 'A', MAR: 'A', ESP: 'B', GER: 'B', NED: 'B', SEN: 'B', BRA: 'C', ARG: 'C', USA: 'D', MEX: 'D', POR: 'E', ENG: 'F', JPN: 'F' };
+    const hist = {
+      ITA: [{ opp: 'CRO', gf: 3, ga: 0, when: '12 giu' }, { opp: 'MAR', gf: 1, ga: 0, when: '9 giu' }],
+      BRA: [{ opp: 'SRB', gf: 2, ga: 1, when: '12 giu' }, { opp: 'CMR', gf: 3, ga: 0, when: '8 giu' }],
+      FRA: [{ opp: 'CRO', gf: 2, ga: 1, when: '12 giu' }],
+      ESP: [{ opp: 'SEN', gf: 3, ga: 1, when: '12 giu' }, { opp: 'NED', gf: 2, ga: 0, when: '8 giu' }],
+      GER: [{ opp: 'SEN', gf: 2, ga: 2, when: '12 giu' }],
+    };
+    const newsMap = {
+      ITA: [{ name: 'FIGC.it', site: 'Sito ufficiale Nazionale' }, { name: 'Gazzetta — Azzurri', site: 'gazzetta.it' }, { name: 'RAI Sport — Nazionali', site: 'raisport.rai.it' }],
+      BRA: [{ name: 'CBF.com.br', site: 'Confederação Brasileira' }, { name: 'Globo Esporte', site: 'ge.globo.com' }, { name: 'FIFA — Brasile', site: 'fifa.com' }],
+    };
+    const last = (hist[code] || []).map(h => { const o = this.T(h.opp); const res = h.gf > h.ga ? 'V' : (h.gf < h.ga ? 'P' : 'N'); return { opp: o, score: h.gf + ' - ' + h.ga, when: h.when, res, resColor: res === 'V' ? '#2D9E4A' : (res === 'P' ? '#E84242' : '#888880'), resBg: res === 'V' ? 'rgba(45,158,74,0.16)' : (res === 'P' ? 'rgba(232,66,66,0.16)' : 'rgba(136,136,128,0.16)') }; });
+    const news = newsMap[code] || [{ name: t.name + ' — Sito ufficiale', site: 'Federazione nazionale' }, { name: 'FIFA.com', site: 'Scheda squadra e statistiche' }, { name: 'Confederazione', site: 'News e calendario' }];
+    return { team: t, group: groupMap[code] || '—', nextIds, last, news };
+  }
+
+  hostCities() {
+    return [
+      { city: 'Toronto', stadium: 'BMO Field', country: 'CAN', matches: 6 },
+      { city: 'Vancouver', stadium: 'BC Place', country: 'CAN', matches: 7 },
+      { city: 'Città del Messico', stadium: 'Estadio Azteca', country: 'MEX', matches: 5 },
+      { city: 'Guadalajara', stadium: 'Estadio Akron', country: 'MEX', matches: 4 },
+      { city: 'Monterrey', stadium: 'Estadio BBVA', country: 'MEX', matches: 4 },
+      { city: 'Atlanta', stadium: 'Mercedes-Benz Stadium', country: 'USA', matches: 8 },
+      { city: 'Boston', stadium: 'Gillette Stadium', country: 'USA', matches: 7 },
+      { city: 'Dallas', stadium: 'AT&T Stadium', country: 'USA', matches: 9 },
+      { city: 'Houston', stadium: 'NRG Stadium', country: 'USA', matches: 7 },
+      { city: 'Kansas City', stadium: 'Arrowhead Stadium', country: 'USA', matches: 6 },
+      { city: 'Los Angeles', stadium: 'SoFi Stadium', country: 'USA', matches: 8 },
+      { city: 'Miami', stadium: 'Hard Rock Stadium', country: 'USA', matches: 7 },
+      { city: 'New York / NJ', stadium: 'MetLife Stadium', country: 'USA', matches: 8 },
+      { city: 'Filadelfia', stadium: 'Lincoln Financial Field', country: 'USA', matches: 6 },
+      { city: 'San Francisco', stadium: "Levi's Stadium", country: 'USA', matches: 6 },
+      { city: 'Seattle', stadium: 'Lumen Field', country: 'USA', matches: 6 },
+    ];
+  }
+
+  cd() {
+    const t = this.target || (Date.now() + 101585000);
+    let r = Math.max(0, t - this.state.now);
+    const days = Math.floor(r / 86400000); r -= days * 86400000;
+    const h = Math.floor(r / 3600000); r -= h * 3600000;
+    const m = Math.floor(r / 60000); r -= m * 60000;
+    const s = Math.floor(r / 1000);
+    const p = (n) => String(n).padStart(2, '0');
+    return { daysStr: String(days), h: p(h), m: p(m), s: p(s) };
+  }
+
+  renderVals() {
+    const c = this.theme();
+    const A = { gold: '#F4C94B', coral: '#E8614A', turq: '#3EC8C0', viola: '#8B5CF6', lime: '#A8E040', rai: '#2D9E4A', err: '#E84242' };
+    const screen = this.state.screen;
+    const tab = screen === 'dettaglio' ? 'home' : ((screen === 'pronostici' || screen === 'squadra' || screen === 'stadi') ? 'preferiti' : screen);
+    const navColor = (k) => tab === k ? A.gold : (c.dark ? '#6E6E68' : '#9A9A92');
+    const ic = (paths) => React.createElement('svg', { width: 23, height: 23, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' }, paths.map((d, i) => React.createElement('path', { key: i, d })));
+    const nav = [
+      { key: 'home', label: 'Home', icon: ic(['M3 10.6 12 3l9 7.6', 'M5.5 9.3V20h13V9.3']), color: navColor('home'), active: tab === 'home', go: () => this.go('home') },
+      { key: 'calendario', label: 'Calendario', icon: ic(['M4 6.5h16v14H4z', 'M4 10.5h16', 'M8 3.2v3', 'M16 3.2v3']), color: navColor('calendario'), active: tab === 'calendario', go: () => this.go('calendario') },
+      { key: 'tabellone', label: 'Tabellone', icon: ic(['M4 5h6v6H4z', 'M4 13h6v6H4z', 'M14 9h6', 'M17 9v6', 'M14 15h6']), color: navColor('tabellone'), active: tab === 'tabellone', go: () => this.go('tabellone') },
+      { key: 'classifiche', label: 'Classifiche', icon: ic(['M6 20V10', 'M12 20V4', 'M18 20v-8', 'M3.5 20h17']), color: navColor('classifiche'), active: tab === 'classifiche', go: () => this.go('classifiche') },
+      { key: 'preferiti', label: 'Preferiti', icon: ic(['M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 17l-5 2.6 1-5.8L3.8 9.7l5.8-.8z']), color: navColor('preferiti'), active: tab === 'preferiti', go: () => this.go('preferiti') },
+    ];
+
+    // Calendario
+    const allCal = [
+      { label: 'Oggi — Lun 15 giu', ids: ['m2', 'm1', 'm3'] },
+      { label: 'Domani — Mar 16 giu', ids: ['m4', 'm5', 'm6'] },
+    ];
+    const f = this.state.calFilter, rai = this.state.raiOnly;
+    const pass = (v) => { if (rai && !v.rai) return false; if (f === 'ITA') return v.home.code === 'ITA' || v.away.code === 'ITA'; if (f === 'A') return v.group === 'A'; if (f === 'B') return v.group === 'B'; if (f === 'RAI') return v.rai; return true; };
+    const calDays = allCal.map(d => ({ label: d.label, matches: d.ids.map(id => this.vm(id)).filter(pass) })).filter(d => d.matches.length > 0);
+    const chipStyle = (act) => act
+      ? 'flex-shrink:0;padding:9px 16px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;background:#F4C94B;color:#111;white-space:nowrap'
+      : `flex-shrink:0;padding:9px 16px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;background:transparent;color:${c.text};border:1.5px solid ${c.border};white-space:nowrap`;
+    const calChips = [['tutti', 'Tutte'], ['ITA', 'Italia'], ['A', 'Gruppo A'], ['B', 'Gruppo B'], ['RAI', 'Solo RAI']].map(([k, l]) => ({ key: k, label: l, style: chipStyle(f === k), go: () => this.setCal(k) }));
+    const trk = (on, col) => ({ width: '46px', height: '27px', borderRadius: '999px', background: on ? col : (c.dark ? '#3A3A38' : '#CFCEC8'), position: 'relative', transition: 'background .2s', flexShrink: 0 });
+    const knb = (on) => ({ position: 'absolute', top: '3px', left: on ? '22px' : '3px', width: '21px', height: '21px', borderRadius: '999px', background: '#fff', transition: 'left .2s', boxShadow: '0 1px 2px rgba(0,0,0,0.2)' });
+
+    // Classifiche
+    const clView = this.state.clView;
+    const seg = (act) => act
+      ? `flex:1;text-align:center;padding:10px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;background:${c.card};color:${c.text};box-shadow:0 1px 2px rgba(0,0,0,0.06)`
+      : `flex:1;text-align:center;padding:10px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;background:transparent;color:${c.muted}`;
+    const groups = this.groups().map(g => ({ name: g.name, rows: g.rows.map((r, i) => ({ ...r, team: this.T(r.code), pos: i + 1, barColor: i < 2 ? A.turq : (i === 2 ? A.gold : 'transparent'), open: () => this.openSquadra(r.code) })) }));
+    const rankStyle = (i) => { const col = i === 1 ? '#F4C94B' : i === 2 ? '#C9C8C2' : i === 3 ? '#E0A56B' : c.surface; const fg = i <= 3 ? '#111' : c.muted; return `width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;background:${col};color:${fg}`; };
+    const scorersVm = this.scorers().map((s, i) => ({ ...s, team: this.T(s.code), rank: i + 1, rankStyle: rankStyle(i + 1), open: () => this.openSquadra(s.code) }));
+
+    // Dettaglio
+    const d = this.vm(this.state.detailId);
+    const dHomeFlagBig = this.bigFlag(this.teams()[d.home.code] ? this.teams()[d.home.code].spec : { colors: ['#888'] });
+    const dAwayFlagBig = this.bigFlag(this.teams()[d.away.code] ? this.teams()[d.away.code].spec : { colors: ['#888'] });
+    const evMeta = { goal: { bg: A.lime }, yellow: { bg: A.gold }, red: { bg: A.err }, sub: { bg: A.turq } };
+    const evIcon = (kind) => {
+      if (kind === 'goal') return React.createElement('svg', { width: 14, height: 14, viewBox: '0 0 24 24', fill: '#111' }, React.createElement('circle', { cx: 12, cy: 12, r: 9, fill: 'none', stroke: '#111', strokeWidth: 2 }), React.createElement('path', { d: 'M12 7l3 2.2-1.1 3.5h-3.8L9 9.2z', fill: '#111' }));
+      if (kind === 'yellow' || kind === 'red') return React.createElement('div', { style: { width: 9, height: 12, borderRadius: 2, background: '#111' } });
+      if (kind === 'sub') return React.createElement('svg', { width: 14, height: 14, viewBox: '0 0 24 24', fill: 'none', stroke: '#111', strokeWidth: 2.4, strokeLinecap: 'round', strokeLinejoin: 'round' }, React.createElement('path', { d: 'M7 7h10l-3-3M17 17H7l3 3' }));
+      return null;
+    };
+    const dEvents = this.events(this.state.detailId).map(e => {
+      if (e.kind === 'divider') return { isDivider: true, isEvent: false, text: e.text };
+      const meta = evMeta[e.kind] || { bg: c.surface };
+      return { isDivider: false, isEvent: true, min: e.min, text: e.text, sub: e.sub || '', hasSub: !!e.sub, iconBg: meta.bg, icon: evIcon(e.kind) };
+    });
+    const lu = this.lineups(this.state.detailId);
+    const dHome = { team: this.T(lu.home.code), module: lu.home.module, players: lu.home.players };
+    const dAway = { team: this.T(lu.away.code), module: lu.away.module, players: lu.away.players };
+    const detailFav = !!this.state.favMatch[this.state.detailId];
+
+    // Pronostici
+    const predIds = ['m5', 'm4', 'm6'];
+    const predMatches = predIds.map(id => { const v = this.vm(id); const p = this.state.preds[id] || { h: 0, a: 0 }; return { ...v, ph: p.h, pa: p.a, incH: () => this.bump(id, 'h', 1), decH: () => this.bump(id, 'h', -1), incA: () => this.bump(id, 'a', 1), decA: () => this.bump(id, 'a', -1) }; });
+    const predHistory = [
+      { label: 'ESP 2 - 0 GER', you: 'Tuo: 2-1', tag: 'Risultato', pts: '+3', tagBg: 'rgba(62,200,192,0.18)', tagColor: '#1E8A84', ptColor: A.turq },
+      { label: 'POR 3 - 1 MAR', you: 'Tuo: 3-1', tag: 'Esatto', pts: '+5', tagBg: 'rgba(168,224,64,0.22)', tagColor: '#5E7E14', ptColor: '#6E9415' },
+      { label: 'NED 2 - 1 SEN', you: 'Tuo: 1-1', tag: 'Errato', pts: '0', tagBg: c.surface, tagColor: c.muted, ptColor: c.muted },
+    ];
+
+    // Tabellone
+    const bm = (h, a, hs, as, note) => {
+      const ht = this.T(h), at = this.T(a);
+      const done = hs != null && as != null;
+      const hw = done && hs > as, aw = done && as > hs;
+      const stl = (win) => `font-size:13px;font-weight:${win ? 900 : 700};color:${win ? c.text : c.muted}`;
+      const sStl = (win) => `font-size:15px;font-weight:900;color:${win ? A.coral : c.muted};min-width:14px;text-align:center`;
+      return { h: ht, a: at, hStyle: stl(hw || !done), aStyle: stl(aw || !done), hScore: done ? hs : (note ? '·' : ''), aScore: done ? as : (note ? '·' : ''), hScoreStyle: sStl(hw), aScoreStyle: sStl(aw), hasNote: !!note, note: note || '' };
+    };
+    const bracket = [
+      { name: 'Ottavi', matches: [bm('ITA', 'NED', 2, 1), bm('ESP', 'CRO', 3, 0), bm('BRA', 'POR', 1, 1, '4-3 d.c.r.'), bm('FRA', 'ENG', 2, 0)] },
+      { name: 'Quarti', matches: [bm('ITA', 'ESP', 1, 0), bm('BRA', 'FRA', 2, 2, '5-4 d.c.r.')] },
+      { name: 'Semifinale', matches: [bm('ITA', 'BRA', null, null, 'Mer 8 lug · 21:00')] },
+      { name: 'Finale', matches: [bm(null, null, null, null, 'Dom 19 lug · New York')] },
+    ];
+
+    // Preferiti
+    const followed = Object.keys(this.state.favs).map(code => ({ team: this.T(code), code, sub: code === 'ITA' ? 'Prossima: vs Olanda · dom' : 'Prossima: vs Serbia · lun', open: () => this.openSquadra(code), remove: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.toggleFav(code); } }));
+
+    // Scheda squadra
+    const prof = this.profile(this.state.teamCode);
+    const squadraFav = !!this.state.favs[this.state.teamCode];
+    const squadraNext = prof.nextIds.map(id => this.vm(id));
+    const sqFollowStyle = squadraFav
+      ? 'display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:999px;background:#F4C94B;color:#111;font-size:14px;font-weight:700;cursor:pointer'
+      : `display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:999px;background:transparent;border:1.5px solid ${c.border};color:${c.text};font-size:14px;font-weight:700;cursor:pointer`;
+    const sp = this.teams()[this.state.teamCode];
+    const sqBigFlag = this.bigFlag(sp ? sp.spec : { colors: ['#888'] });
+
+    // Stadi e città
+    const cm = { USA: { color: '#F4C94B', name: 'Stati Uniti' }, CAN: { color: '#3EC8C0', name: 'Canada' }, MEX: { color: '#E8614A', name: 'Messico' } };
+    const sf = this.state.stadiFilter;
+    const stadiCities = this.hostCities().filter(h => sf === 'tutti' || h.country === sf).map(h => ({ ...h, dot: cm[h.country].color, countryName: cm[h.country].name }));
+    const stadiChips = [['tutti', 'Tutti'], ['CAN', 'Canada'], ['USA', 'USA'], ['MEX', 'Messico']].map(([k, l]) => ({ key: k, label: l, style: chipStyle(sf === k), go: () => this.setStadiFilter(k) }));
+    const mapBg = c.dark ? '#15201E' : '#E2EBE8';
+
+    return {
+      c, A, nav,
+      isSquadra: screen === 'squadra', isStadi: screen === 'stadi',
+      prof, squadraNext, squadraFav, sqFollowStyle, sqFollowLabel: squadraFav ? 'Segui — attivo' : 'Segui squadra', sqBigFlag, sqHasLast: prof.last.length > 0, sqNoLast: prof.last.length === 0,
+      toggleSquadraFav: () => this.toggleFav(this.state.teamCode),
+      sqStarFill: squadraFav ? '#111' : 'none', sqStarStroke: squadraFav ? '#111' : c.text,
+      stadiCities, stadiChips, mapBg, goStadi: () => this.goStadi(),
+      isHome: screen === 'home', isCal: screen === 'calendario', isClass: screen === 'classifiche',
+      isDetail: screen === 'dettaglio', isPron: screen === 'pronostici', isTab: screen === 'tabellone', isPref: screen === 'preferiti',
+      // home
+      cd: this.cd(), favHome: this.T('ITA'), favAway: this.T('NED'),
+      showFavCountdown: !!this.state.favs['ITA'], noFav: !this.state.favs['ITA'], favTeamName: 'Italia', goPrefBtn: () => this.go('preferiti'),
+      todayMatches: ['m2', 'm1', 'm3'].map(id => this.vm(id)),
+      recentMatches: ['r1', 'r2'].map(id => this.vm(id)),
+      // cal
+      calChips, calDays, calEmpty: calDays.length === 0,
+      toggleRai: () => this.toggleRai(), raiTrack: trk(rai, A.rai), raiKnob: knb(rai),
+      // class
+      goGironi: () => this.setCl('gironi'), goMarcatori: () => this.setCl('marcatori'),
+      segGironi: seg(clView === 'gironi'), segMarcatori: seg(clView === 'marcatori'),
+      isGironi: clView === 'gironi', isMarcatori: clView === 'marcatori', groups, scorersVm,
+      // detail
+      d, dEvents, dHome, dAway, dHomeFlagBig, dAwayFlagBig,
+      back: () => this.back(), toggleDetailFav: () => this.toggleDetailFav(),
+      detailStarFill: detailFav ? A.gold : 'none', detailStarStroke: detailFav ? A.gold : c.muted,
+      // pron
+      predMatches, predHistory,
+      // tabellone
+      bracket,
+      // preferiti
+      followed, prefEmpty: followed.length === 0, goPron: () => this.goPron(),
+      toggleNotif: () => this.toggleNotif(), notifTrack: trk(this.state.notif, A.rai), notifKnob: knb(this.state.notif),
+      toggleNotif2: () => this.toggleNotif2(), notif2Track: trk(this.state.notif2, A.rai), notif2Knob: knb(this.state.notif2),
+    };
+  }
+}
+</script>
+</body>
+</html>

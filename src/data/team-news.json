@@ -1,0 +1,12 @@
+{
+  "ITA": [
+    { "name": "FIGC.it", "site": "Sito ufficiale Nazionale", "url": "https://www.figc.it/it/nazionale-a/" },
+    { "name": "Gazzetta — Azzurri", "site": "gazzetta.it", "url": "https://www.gazzetta.it/Calcio/Nazionale/" },
+    { "name": "RAI Sport — Nazionali", "site": "raisport.rai.it", "url": "https://www.raisport.rai.it/" }
+  ],
+  "BRA": [
+    { "name": "CBF.com.br", "site": "Confederação Brasileira", "url": "https://www.cbf.com.br/" },
+    { "name": "Globo Esporte", "site": "ge.globo.com", "url": "https://ge.globo.com/futebol/selecao-brasileira/" },
+    { "name": "FIFA — Brasile", "site": "fifa.com", "url": "https://www.fifa.com/it/" }
+  ]
+}

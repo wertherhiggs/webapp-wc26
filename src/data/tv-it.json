@@ -1,0 +1,24 @@
+{
+  "_note": "Mapping canale TV italiano per gara, curato a mano. inChiaro=true → RAI gratis. DAZN trasmette tutte le 104 gare.",
+  "_legend": { "RAI 1": "#2D9E4A", "RAI 2": "#2D9E4A", "DAZN": "#1A1A1A", "Sky Sport": "#2E4DA7" },
+  "matches": {
+    "a1": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
+    "a2": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "a3": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
+    "a4": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "m1": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
+    "a6": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "b1": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "b2": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "b3": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "b4": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "m2": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "r2": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "c1": { "canale": "RAI 2", "color": "#2D9E4A", "inChiaro": true },
+    "m3": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
+    "m4": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "f1": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
+    "m5": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
+    "m6": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false }
+  }
+}

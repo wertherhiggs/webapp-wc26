@@ -1,0 +1,63 @@
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { VitePWA } from 'vite-plugin-pwa'
+
+// App statica per GitHub Pages: base relativa + hash history (vedi router)
+// così funziona sotto qualunque path (/<repo>/) senza 404 al refresh.
+export default defineConfig({
+  base: './',
+  plugins: [
+    vue(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.svg', 'icons/*.svg'],
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,svg,png,json,woff2}'],
+        navigateFallback: 'index.html',
+        runtimeCaching: [
+          {
+            // dati pubblici (openfootball) — network-first con fallback cache
+            urlPattern: /^https:\/\/raw\.githubusercontent\.com\/.*/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'worldcup-data',
+              expiration: { maxEntries: 64, maxAgeSeconds: 60 * 60 * 24 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+        ],
+      },
+      manifest: {
+        name: 'Mondiali 2026',
+        short_name: 'Mondiali 26',
+        description:
+          'Calendario, risultati, classifiche e tabellone della FIFA World Cup 2026 con orario italiano e canale TV.',
+        lang: 'it',
+        theme_color: '#111111',
+        background_color: '#F8F7F2',
+        display: 'standalone',
+        orientation: 'portrait',
+        start_url: './',
+        scope: './',
+        icons: [
+          { src: 'icons/icon.svg', sizes: 'any', type: 'image/svg+xml' },
+          {
+            src: 'icons/icon-maskable.svg',
+            sizes: 'any',
+            type: 'image/svg+xml',
+            purpose: 'maskable',
+          },
+        ],
+      },
+    }),
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+  worker: {
+    format: 'es',
+  },
+})

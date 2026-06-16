@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "home": "Home",
+    "calendario": "Calendario",
+    "tabellone": "Tabellone",
+    "classifiche": "Classifiche",
+    "preferiti": "Preferiti"
+  },
+  "common": {
+    "back": "Indietro",
+    "today": "Oggi",
+    "italianTime": "Ora italiana",
+    "freeRai": "In chiaro RAI",
+    "live": "Live",
+    "ft": "Finita",
+    "sched": "In programma",
+    "vs": "VS",
+    "matches": "gare",
+    "noData": "Cronaca non disponibile"
+  },
+  "home": {
+    "todayMatches": "Partite di oggi",
+    "recent": "Ultime giocate",
+    "nextFav": "Prossima preferita",
+    "countdown": "Conto alla rovescia",
+    "noFavTitle": "Nessuna preferita seguita",
+    "noFavText": "Il conto alla rovescia mostra la prossima partita delle tue squadre preferite. Seguine una per attivarlo.",
+    "followTeam": "Segui una squadra",
+    "highlights": "Rivedi gli highlights",
+    "highlightsSub": "Tutti i gol su YouTube",
+    "raiBannerSub": "Le gare gratuite sono segnalate con il badge verde. Attiva le notifiche per non perderle."
+  },
+  "calendario": {
+    "title": "Calendario",
+    "onlyRai": "Solo in chiaro RAI",
+    "all": "Tutte",
+    "empty": "Nessuna partita",
+    "emptyText": "Nessuna gara corrisponde ai filtri selezionati."
+  },
+  "classifiche": {
+    "title": "Classifiche",
+    "groups": "Gironi",
+    "scorers": "Marcatori",
+    "qualified": "Qualificate",
+    "playoff": "Ripescaggio",
+    "goals": "gol"
+  },
+  "tabellone": {
+    "title": "Tabellone",
+    "scroll": "Scorri in orizzontale →",
+    "r16": "Ottavi",
+    "qf": "Quarti",
+    "sf": "Semifinale",
+    "f": "Finale"
+  },
+  "detail": {
+    "report": "Cronaca",
+    "lineups": "Formazioni",
+    "highlights": "Rivedi gli highlights",
+    "halftime": "Intervallo"
+  },
+  "squadra": {
+    "next": "Prossime gare",
+    "last": "Ultime gare",
+    "noLast": "Nessuna gara giocata finora.",
+    "news": "Notizie sulla nazionale",
+    "follow": "Segui squadra",
+    "following": "Segui — attivo"
+  },
+  "preferiti": {
+    "title": "Preferiti",
+    "followed": "Squadre seguite",
+    "noTeams": "Nessuna squadra seguita",
+    "noTeamsText": "Tocca la stella su una squadra per seguirne le partite.",
+    "predictions": "I tuoi pronostici",
+    "explore": "Esplora",
+    "stadi": "Stadi e città",
+    "stadiSub": "16 sedi in Canada, USA e Messico",
+    "notifications": "Notifiche",
+    "notifNoon": "Promemoria a mezzogiorno",
+    "notifNoonSub": "Avviso il giorno della gara delle tue squadre",
+    "notifGoals": "Gol in tempo reale",
+    "notifGoalsSub": "Notifica a ogni gol delle preferite (solo ad app aperta)",
+    "notifDisclaimer": "Le notifiche sono best-effort: ad app chiusa l'orario non è garantito."
+  },
+  "pronostici": {
+    "title": "Pronostici",
+    "score": "Il tuo punteggio",
+    "toPredict": "Da pronosticare",
+    "saved": "Pronostico salvato",
+    "history": "Storico",
+    "pts": "pt"
+  },
+  "stadi": {
+    "title": "Stadi e città",
+    "sub": "16 sedi · 3 paesi ospitanti",
+    "all": "Tutti"
+  },
+  "settings": {
+    "theme": "Tema",
+    "light": "Chiaro",
+    "dark": "Scuro"
+  }
+}

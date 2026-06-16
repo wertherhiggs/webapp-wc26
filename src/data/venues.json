@@ -1,0 +1,18 @@
+[
+  { "id": "tor", "city": "Toronto", "stadium": "BMO Field", "country": "CAN" },
+  { "id": "van", "city": "Vancouver", "stadium": "BC Place", "country": "CAN" },
+  { "id": "mex", "city": "Città del Messico", "stadium": "Estadio Azteca", "country": "MEX" },
+  { "id": "gdl", "city": "Guadalajara", "stadium": "Estadio Akron", "country": "MEX" },
+  { "id": "mty", "city": "Monterrey", "stadium": "Estadio BBVA", "country": "MEX" },
+  { "id": "atl", "city": "Atlanta", "stadium": "Mercedes-Benz Stadium", "country": "USA" },
+  { "id": "bos", "city": "Boston", "stadium": "Gillette Stadium", "country": "USA" },
+  { "id": "dal", "city": "Dallas", "stadium": "AT&T Stadium", "country": "USA" },
+  { "id": "hou", "city": "Houston", "stadium": "NRG Stadium", "country": "USA" },
+  { "id": "kan", "city": "Kansas City", "stadium": "Arrowhead Stadium", "country": "USA" },
+  { "id": "lax", "city": "Los Angeles", "stadium": "SoFi Stadium", "country": "USA" },
+  { "id": "mia", "city": "Miami", "stadium": "Hard Rock Stadium", "country": "USA" },
+  { "id": "nyc", "city": "New York / NJ", "stadium": "MetLife Stadium", "country": "USA" },
+  { "id": "phi", "city": "Filadelfia", "stadium": "Lincoln Financial Field", "country": "USA" },
+  { "id": "sfo", "city": "San Francisco", "stadium": "Levi's Stadium", "country": "USA" },
+  { "id": "sea", "city": "Seattle", "stadium": "Lumen Field", "country": "USA" }
+]
