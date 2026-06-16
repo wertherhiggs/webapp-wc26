@@ -18,7 +18,7 @@ onMounted(() => {
 onUnmounted(() => timer && clearInterval(timer))
 
 const cd = computed(() => countdownTo(props.match.kickoff, now.value))
-const tv = computed(() => getTv(props.match.id))
+const tv = computed(() => getTv(props.match))
 const when = computed(
   () => `${romeShortDay(props.match.kickoff)} · ${romeTime(props.match.kickoff)} · ${tv.value.canale}`,
 )

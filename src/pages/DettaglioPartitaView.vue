@@ -17,7 +17,7 @@ const matches = useMatchesStore()
 const favorites = useFavoritesStore()
 
 const match = computed(() => matches.getById(props.id))
-const tv = computed(() => (match.value ? getTv(match.value.id) : null))
+const tv = computed(() => (match.value ? getTv(match.value) : null))
 const status = computed(() => (match.value ? statusVm(match.value) : null))
 const venue = computed(() => matches.venueById(match.value?.venueId))
 const events = computed(() => matches.eventsFor(props.id))

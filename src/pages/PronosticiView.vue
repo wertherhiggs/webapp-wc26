@@ -39,8 +39,8 @@ const tagColor = (tag: string) =>
     <div class="list">
       <div v-for="m in toPredict" :key="m.id" class="pc card">
         <div class="phd">
-          <span class="label">{{ romeTime(m.kickoff) }} · {{ getTv(m.id).canale }}</span>
-          <span v-if="getTv(m.id).inChiaro" class="rai">RAI</span>
+          <span class="label">{{ romeTime(m.kickoff) }} · {{ getTv(m).canale }}</span>
+          <span v-if="getTv(m).inChiaro" class="rai">RAI</span>
         </div>
         <div class="prow">
           <div class="side" @click="router.push({ name: 'squadra', params: { code: m.home } })">

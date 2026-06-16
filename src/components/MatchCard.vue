@@ -12,7 +12,7 @@ const props = defineProps<{ match: Match }>()
 const router = useRouter()
 const store = useMatchesStore()
 
-const tv = computed(() => getTv(props.match.id))
+const tv = computed(() => getTv(props.match))
 const status = computed(() => statusVm(props.match))
 const withScore = computed(() => showScore(props.match))
 const footer = computed(() => store.footerFor(props.match.id))

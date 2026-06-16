@@ -5,7 +5,7 @@ import MatchCard from '@/components/MatchCard.vue'
 import CountdownCard from '@/components/CountdownCard.vue'
 import { useMatchesStore } from '@/stores/matches'
 import { useFavoritesStore } from '@/stores/favorites'
-import { getTv } from '@/data/tv'
+import { raiFreeCount } from '@/data/tv'
 import { romeDayLabel } from '@/services/time'
 
 const router = useRouter()
@@ -28,7 +28,7 @@ const favTeamOf = computed(() => {
   return favorites.teams.has(m.home) ? m.home : favorites.teams.has(m.away) ? m.away : m.home
 })
 
-const raiCount = computed(() => matches.matches.filter((m) => getTv(m.id).inChiaro).length)
+const raiCount = raiFreeCount
 
 const highlightsUrl =
   'https://www.youtube.com/results?search_query=FIFA+World+Cup+2026+highlights'

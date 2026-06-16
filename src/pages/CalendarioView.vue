@@ -20,7 +20,7 @@ const groups = computed(() => {
 
 const filtered = computed(() =>
   matches.sortedByKickoff.filter((m) => {
-    if (raiOnly.value && !getTv(m.id).inChiaro) return false
+    if (raiOnly.value && !getTv(m).inChiaro) return false
     if (group.value !== 'all' && m.group !== group.value) return false
     return true
   }),

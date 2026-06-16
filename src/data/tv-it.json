@@ -1,24 +1,17 @@
 {
-  "_note": "Mapping canale TV italiano per gara, curato a mano. inChiaro=true → RAI gratis. DAZN trasmette tutte le 104 gare.",
-  "_legend": { "RAI 1": "#2D9E4A", "RAI 2": "#2D9E4A", "DAZN": "#1A1A1A", "Sky Sport": "#2E4DA7" },
-  "matches": {
-    "a1": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
-    "a2": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "a3": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
-    "a4": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "m1": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
-    "a6": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "b1": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "b2": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "b3": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "b4": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "m2": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "r2": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "c1": { "canale": "RAI 2", "color": "#2D9E4A", "inChiaro": true },
-    "m3": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
-    "m4": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "f1": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false },
-    "m5": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
-    "m6": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false }
-  }
+  "_note": "Canali TV italiani per gara, curato a mano (NON in alcuna API). Chiave = numero gara FIFA (1-104), stabile tra seed e openfootball. DAZN trasmette tutte le 104; RAI 1 le 35 in chiaro.",
+  "_formato2026": "104 gare: 1-72 gironi, 73-88 sedicesimi, 89-96 ottavi, 97-100 quarti, 101-102 semifinali, 103 finale 3°/4° posto, 104 finale.",
+  "_vincoloRai": "35 in chiaro su RAI 1: apertura + selezione gironi (17 tot), 6 sedicesimi, 4 ottavi, tutti i quarti (4), semifinali (2), finalina e finale.",
+  "channels": {
+    "rai": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
+    "dazn": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false }
+  },
+  "raiInChiaro": [
+    1, 5, 8, 12, 16, 17, 24, 28, 33, 37, 39, 44, 48, 56, 64, 68, 72,
+    73, 76, 80, 84, 86, 88,
+    89, 91, 93, 95,
+    97, 98, 99, 100,
+    101, 102,
+    103, 104
+  ]
 }
