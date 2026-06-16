@@ -5,12 +5,20 @@ import ChipFiltro from '@/components/ChipFiltro.vue'
 import ToggleSwitch from '@/components/ToggleSwitch.vue'
 import { useMatchesStore } from '@/stores/matches'
 import { getTv } from '@/data/tv'
-import { romeDayKey, romeDayLabel } from '@/services/time'
+import { romeDayKey, romeDayLabel, todayKey } from '@/services/time'
 import type { Match } from '@/types'
 
 const matches = useMatchesStore()
 const group = ref<string>('all')
+const status = ref<'all' | 'today' | 'todo' | 'done'>('all')
 const raiOnly = ref(false)
+
+const statusChips: { key: typeof status.value; label: string }[] = [
+  { key: 'all', label: 'Tutte' },
+  { key: 'today', label: 'Oggi' },
+  { key: 'todo', label: 'Da giocare' },
+  { key: 'done', label: 'Terminate' },
+]
 
 const groups = computed(() => {
   const set = new Set<string>()
@@ -22,6 +30,9 @@ const filtered = computed(() =>
   matches.sortedByKickoff.filter((m) => {
     if (raiOnly.value && !getTv(m).inChiaro) return false
     if (group.value !== 'all' && m.group !== group.value) return false
+    if (status.value === 'today' && romeDayKey(m.kickoff) !== todayKey()) return false
+    if (status.value === 'todo' && m.status === 'ft') return false
+    if (status.value === 'done' && m.status !== 'ft') return false
     return true
   }),
 )
@@ -49,7 +60,16 @@ const days = computed<Day[]>(() => {
     <h1 class="h1 title">{{ $t('calendario.title') }}</h1>
 
     <div data-hscroll class="chips">
-      <ChipFiltro :label="$t('calendario.all')" :active="group === 'all'" @select="group = 'all'" />
+      <ChipFiltro
+        v-for="s in statusChips"
+        :key="s.key"
+        :label="s.label"
+        :active="status === s.key"
+        @select="status = s.key"
+      />
+    </div>
+    <div data-hscroll class="chips">
+      <ChipFiltro label="Tutti i gironi" :active="group === 'all'" @select="group = 'all'" />
       <ChipFiltro
         v-for="g in groups"
         :key="g"

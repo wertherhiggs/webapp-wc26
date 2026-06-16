@@ -20,38 +20,12 @@ const STAGES: { key: string; name: string }[] = [
 
 const hasReal = computed(() => matches.knockoutMatches.length > 0)
 
-// --- Bracket reale (da dati openfootball) ---
-const realRounds = computed(() =>
+const rounds = computed(() =>
   STAGES.map((s) => ({
     name: s.name,
     matches: matches.knockoutMatches.filter((m) => m.stage === s.key),
   })).filter((r) => r.matches.length > 0),
 )
-
-// --- Proiezione provvisoria da classifiche (offline / pre-knockout) ---
-interface Slot { code: string | null; placeholder: string }
-interface BMatch { home: Slot; away: Slot; note?: string }
-const slot = (code: string | null, placeholder: string): Slot => ({ code, placeholder })
-
-const projection = computed(() => {
-  const leaders = matches.standings.map((g) => ({
-    group: g.group,
-    first: g.rows[0]?.code ?? null,
-    second: g.rows[1]?.code ?? null,
-  }))
-  const ottavi: BMatch[] = leaders.map((a, i) => {
-    const b = leaders[(i + 1) % leaders.length]
-    return { home: slot(a.first, `1° ${a.group}`), away: slot(b.second, `2° ${b.group}`) }
-  })
-  const empties = (n: number): BMatch[] =>
-    Array.from({ length: n }, () => ({ home: slot(null, 'Da definire'), away: slot(null, 'Da definire'), note: 'A fine gironi' }))
-  return [
-    { name: 'Ottavi', matches: ottavi.length ? ottavi : empties(4) },
-    { name: 'Quarti', matches: empties(Math.max(1, Math.ceil(ottavi.length / 2))) },
-    { name: 'Semifinale', matches: empties(2) },
-    { name: 'Finale', matches: [{ home: slot(null, '—'), away: slot(null, '—'), note: 'Dom 19 lug · New York' }] },
-  ]
-})
 
 function score(m: Match, side: 'h' | 'a'): string {
   if (m.status === 'ft' && m.hs != null && m.as != null) return String(side === 'h' ? m.hs : m.as)
@@ -70,12 +44,11 @@ function note(m: Match): string {
   <div class="page">
     <div class="title">
       <h1 class="h1">{{ $t('tabellone.title') }}</h1>
-      <div class="muted sub">{{ $t('tabellone.scroll') }}</div>
+      <div v-if="hasReal" class="muted sub">{{ $t('tabellone.scroll') }}</div>
     </div>
 
-    <!-- Bracket reale -->
     <div v-if="hasReal" data-hscroll class="board">
-      <div v-for="r in realRounds" :key="r.name" class="col">
+      <div v-for="r in rounds" :key="r.name" class="col">
         <div class="rname label">{{ r.name }}</div>
         <button v-for="m in r.matches" :key="m.id" class="bm card" @click="router.push({ name: 'dettaglio', params: { id: m.id } })">
           <div class="line">
@@ -97,44 +70,19 @@ function note(m: Match): string {
       </div>
     </div>
 
-    <!-- Proiezione provvisoria -->
-    <template v-else>
-      <div class="note">Tabellone provvisorio: si popola al termine della fase a gironi.</div>
-      <div data-hscroll class="board">
-        <div v-for="r in projection" :key="r.name" class="col">
-          <div class="rname label">{{ r.name }}</div>
-          <div v-for="(m, i) in r.matches" :key="i" class="bm card">
-            <div class="line">
-              <span class="t">
-                <TeamFlag v-if="m.home.code" :code="m.home.code" size="sm" />
-                <span class="nm" :class="{ ph: !m.home.code }">{{ m.home.code ?? m.home.placeholder }}</span>
-              </span>
-            </div>
-            <div class="line">
-              <span class="t">
-                <TeamFlag v-if="m.away.code" :code="m.away.code" size="sm" />
-                <span class="nm" :class="{ ph: !m.away.code }">{{ m.away.code ?? m.away.placeholder }}</span>
-              </span>
-            </div>
-            <div v-if="m.note" class="bnote">{{ m.note }}</div>
-          </div>
-        </div>
-      </div>
-    </template>
+    <div v-else class="empty card">
+      <span class="eicon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h6v6H4z" /><path d="M4 13h6v6H4z" /><path d="M14 9h6M17 9v6M14 15h6" /></svg>
+      </span>
+      <div class="et">Tabellone non ancora disponibile</div>
+      <p class="muted es">Gli accoppiamenti dai sedicesimi alla finale compaiono quando il calendario della fase a eliminazione è pubblicato (dopo i gironi).</p>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .title { padding: 8px 2px 6px; }
 .sub { font-size: 13px; margin-top: 2px; }
-.note {
-  background: var(--surface);
-  border-radius: var(--r-sm);
-  padding: 12px 14px;
-  font-size: 13px;
-  color: var(--muted);
-  margin: 12px 0 4px;
-}
 .board {
   display: flex;
   gap: 14px;
@@ -175,4 +123,24 @@ function note(m: Match): string {
   padding-top: 5px;
   border-top: 0.5px solid var(--border);
 }
+.empty {
+  margin-top: 16px;
+  padding: 40px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+.eicon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.et { font-size: 16px; font-weight: 700; }
+.es { font-size: 13px; max-width: 280px; margin: 0; line-height: 1.5; }
 </style>

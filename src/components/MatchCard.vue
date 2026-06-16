@@ -5,10 +5,13 @@ import TeamFlag from './TeamFlag.vue'
 import { useMatchesStore } from '@/stores/matches'
 import { getTv } from '@/data/tv'
 import { statusVm, showScore } from '@/utils/matchVm'
-import { romeTime } from '@/services/time'
+import { romeTime, romeShortDay } from '@/services/time'
 import type { Match } from '@/types'
 
-const props = defineProps<{ match: Match }>()
+const props = withDefaults(
+  defineProps<{ match: Match; flagSize?: 'sm' | 'md' | 'lg' }>(),
+  { flagSize: 'md' },
+)
 const router = useRouter()
 const store = useMatchesStore()
 
@@ -42,22 +45,25 @@ function open() {
 
     <div class="mid">
       <div class="team">
-        <TeamFlag :code="match.home" />
+        <TeamFlag :code="match.home" :size="flagSize" />
         <span class="code">{{ match.home }}</span>
       </div>
       <div class="center">
-        <div v-if="withScore" class="scorebox">
-          <span class="sc">{{ match.hs }}</span>
-          <span class="dash">-</span>
-          <span class="sc">{{ match.as }}</span>
-        </div>
+        <template v-if="withScore">
+          <div class="scorebox">
+            <span class="sc">{{ match.hs }}</span>
+            <span class="dash">-</span>
+            <span class="sc">{{ match.as }}</span>
+          </div>
+          <span class="kowhen">{{ romeShortDay(match.kickoff) }} · {{ romeTime(match.kickoff) }}</span>
+        </template>
         <template v-else>
           <span class="ora">{{ $t('common.italianTime') }}</span>
           <span class="time">{{ romeTime(match.kickoff) }}</span>
         </template>
       </div>
       <div class="team">
-        <TeamFlag :code="match.away" />
+        <TeamFlag :code="match.away" :size="flagSize" />
         <span class="code">{{ match.away }}</span>
       </div>
     </div>
@@ -203,6 +209,14 @@ function open() {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
+}
+.kowhen {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
 }
 .time {
   font-size: 30px;

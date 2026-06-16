@@ -1,5 +1,5 @@
 import type { FlagSpec } from '@/types'
-import { CODE_TO_ISO } from '@/data/team-codes'
+import { CODE_TO_ISO, ITALIAN_NAMES } from '@/data/team-codes'
 
 const cr = '#F4F3EE'
 
@@ -47,7 +47,7 @@ export const TEAMS: Record<string, TeamSeed> = {
 }
 
 export function teamName(code: string): string {
-  return TEAMS[code]?.name ?? code
+  return TEAMS[code]?.name ?? ITALIAN_NAMES[code] ?? code
 }
 
 export function teamFlag(code: string): FlagSpec {
@@ -56,11 +56,15 @@ export function teamFlag(code: string): FlagSpec {
   )
 }
 
-// Tag sequence per la bandiera dell'Inghilterra (sottodivisione GB-ENG).
-const ENG_FLAG = '\u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}'
+// Tag sequence per le bandiere delle sottodivisioni GB (Inghilterra, Scozia).
+const SUBDIVISION_FLAGS: Record<string, string> = {
+  eng: '\u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}',
+  sco: '\u{1F3F4}\u{E0067}\u{E0062}\u{E0073}\u{E0063}\u{E0074}\u{E007F}',
+}
 
 function isoToEmoji(iso: string): string {
-  if (iso === 'eng') return ENG_FLAG
+  if (SUBDIVISION_FLAGS[iso]) return SUBDIVISION_FLAGS[iso]
+  if (iso.length !== 2) return ''
   return iso
     .toUpperCase()
     .replace(/./g, (c) => String.fromCodePoint(127397 + c.charCodeAt(0)))
