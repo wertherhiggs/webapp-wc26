@@ -173,12 +173,18 @@ best-effort, deploy workflow GitHub Pages.
 > incompatibile con Node 24. Usare l'npm di nvm: anteporre
 > `/Users/wertherhiggs/.nvm/versions/node/v24.16.0/bin` al PATH, oppure `corepack`.
 
-### TODO noti / prossimi passi
-- **Bandiere reali**: ora gradienti CSS placeholder (`src/data/teams.ts`) → sostituire con SVG ISO.
-- **Dati live**: verificare l'URL reale di openfootball 2026 in `dataSync.ts` e affinare il parser;
-  valutare la fonte `rezarahiminia/worldcup2026` per i risultati live.
-- **`tv-it.json`**: completare il mapping canali per tutte le 104 gare (ora coperte le gare seed).
-- **Tabellone**: passare dal bracket provvisorio (proiezione da classifiche) al popolamento reale a
-  fine gironi (sedicesimi→finale del format 2026 a 48 squadre).
-- **Notifiche "gol in tempo reale"**: oggi è un flag; richiede polling ad app aperta.
-- **Icone PWA**: ora SVG; per copertura store-like generare anche PNG 192/512.
+### TODO completati (post-deploy)
+- ✅ **Bandiere reali**: emoji ISO con fallback gradiente (`teamFlagEmoji` in `src/data/teams.ts`).
+- ✅ **Dati live**: parser openfootball 2026 reale (schema verificato) in `dataSync.ts`; su sync
+  riuscito sostituisce il seed. Mappe nomi→codici/ISO in `src/data/team-codes.ts`.
+- ✅ **`tv-it.json`**: mapping per tutte le 104 gare, indicizzato per numero gara FIFA (35 RAI in chiaro).
+- ✅ **Tabellone reale**: bracket R32→finale da dati openfootball (`stage` + placeholder); proiezione
+  da classifiche come fallback offline.
+- ✅ **Notifiche "gol in tempo reale"**: polling 60s ad app aperta (`checkGoals` + `App.vue`).
+- ✅ **Icone PWA**: PNG 192/512 + maskable (`scripts/gen-icons.mjs`, `npm run icons`).
+
+### TODO residui / migliorie
+- **Anagrafica 48 squadre**: `NAME_TO_CODE`/`CODE_TO_ISO` coprono ~50 nazioni; completare con tutte le
+  qualificate 2026 + nomi italiani (ora le ignote mostrano pseudo-codice 3 lettere).
+- **`tv-it.json`**: affinare l'elenco esatto delle 35 RAI quando il calendario ufficiale è definito.
+- **Risultati live**: openfootball è post-gara; per il minuto-per-minuto valutare `rezarahiminia/worldcup2026`.
