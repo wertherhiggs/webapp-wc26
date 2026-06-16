@@ -1,4 +1,5 @@
 import type { FlagSpec } from '@/types'
+import { CODE_TO_ISO } from '@/data/team-codes'
 
 const cr = '#F4F3EE'
 
@@ -67,7 +68,7 @@ function isoToEmoji(iso: string): string {
 
 /** Bandiera emoji per un codice squadra (stringa vuota se sconosciuta → usa fallback). */
 export function teamFlagEmoji(code: string): string {
-  const iso = TEAMS[code]?.iso
+  const iso = TEAMS[code]?.iso ?? CODE_TO_ISO[code]
   return iso ? isoToEmoji(iso) : ''
 }
 

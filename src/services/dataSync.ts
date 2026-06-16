@@ -1,7 +1,8 @@
 import { db } from '@/db/dexie'
 import { SEED_MATCHES, SEED_EVENTS } from '@/data/seed'
 import venuesJson from '@/data/venues.json'
-import type { Match, Venue } from '@/types'
+import { NAME_TO_CODE } from '@/data/team-codes'
+import type { Match, MatchEvent, Venue, EventKind } from '@/types'
 
 const OPENFOOTBALL_URL =
   'https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json'
@@ -18,62 +19,114 @@ export async function ensureSeeded(): Promise<void> {
   await db.meta.put({ key: 'seed', lastSync: Date.now(), version: 'seed-1' })
 }
 
-interface OpenFootballMatch {
+// --- Schema reale openfootball 2026 (2026/worldcup.json) ---
+interface OfGoal {
+  name: string
+  minute?: string | number
+  penalty?: boolean
+  owngoal?: boolean
+}
+interface OfMatch {
+  round?: string
   num?: number
   date?: string
-  time?: string
+  time?: string // es. "13:00 UTC-6"
+  team1?: string
+  team2?: string
+  score?: { ft?: [number, number]; ht?: [number, number] }
+  goals1?: OfGoal[]
+  goals2?: OfGoal[]
   group?: string
-  team1?: string | { name?: string; code?: string }
-  team2?: string | { name?: string; code?: string }
-  score?: { ft?: [number, number] }
+  ground?: string
 }
-interface OpenFootballData {
-  rounds?: { matches?: OpenFootballMatch[] }[]
-}
-
-function codeOf(team: OpenFootballMatch['team1']): string | null {
-  if (!team) return null
-  if (typeof team === 'string') return team.length === 3 ? team.toUpperCase() : null
-  return team.code ? team.code.toUpperCase() : null
+interface OfData {
+  name?: string
+  matches?: OfMatch[]
 }
 
-/** Converte un orario locale (date+time) in ISO UTC, assumendo Europe/Rome (CEST). */
+/** Nome squadra openfootball (inglese) → codice 3 lettere. Fallback: prime 3 lettere. */
+function codeFor(name?: string): string | null {
+  if (!name) return null
+  const known = NAME_TO_CODE[name.trim()]
+  if (known) return known
+  const letters = name.replace(/[^A-Za-z]/g, '')
+  return letters ? letters.slice(0, 3).toUpperCase() : null
+}
+
+/** "13:00 UTC-6" / "21:00 UTC+2" / "18:00" → ISO UTC. */
 function toUtcIso(date?: string, time?: string): string | null {
   if (!date) return null
-  const t = time && /^\d{1,2}:\d{2}$/.test(time) ? time : '18:00'
-  // CEST = UTC+2 a giugno/luglio
-  return `${date}T${t.padStart(5, '0')}:00+02:00`
+  const m = /^(\d{1,2}):(\d{2})(?:\s*UTC([+-]\d{1,2}))?/.exec((time ?? '').trim())
+  const [y, mo, d] = date.split('-').map(Number)
+  if (!y || !mo || !d) return null
+  const hh = m ? Number(m[1]) : 18
+  const mm = m ? Number(m[2]) : 0
+  const off = m && m[3] ? Number(m[3]) : 0 // ora locale = UTC+off → UTC = locale − off
+  return new Date(Date.UTC(y, mo - 1, d, hh - off, mm)).toISOString()
 }
 
-function mapOpenFootball(data: OpenFootballData): Match[] {
-  const out: Match[] = []
-  for (const round of data.rounds ?? []) {
-    for (const m of round.matches ?? []) {
-      const home = codeOf(m.team1)
-      const away = codeOf(m.team2)
-      const kickoff = toUtcIso(m.date, m.time)
-      if (!home || !away || !kickoff) continue
-      const ft = m.score?.ft
-      const played = Array.isArray(ft) && ft.length === 2
-      out.push({
-        id: m.num != null ? `of${m.num}` : `${home}-${away}-${m.date}`,
-        num: m.num,
-        kickoff: new Date(kickoff).toISOString(),
-        status: played ? 'ft' : 'sched',
-        home,
-        away,
-        hs: played ? ft![0] : undefined,
-        as: played ? ft![1] : undefined,
-        group: m.group ? m.group.replace(/^Group\s+/i, '').trim() : null,
-      })
+function minNumOf(minute?: string | number): number {
+  if (minute == null) return 0
+  const m = /(\d+)/.exec(String(minute))
+  return m ? Number(m[1]) : 0
+}
+
+function goalEvents(matchId: string, goals: OfGoal[] | undefined, side: 'home' | 'away'): MatchEvent[] {
+  return (goals ?? []).map((g) => {
+    const kind: EventKind = g.owngoal ? 'own_goal' : g.penalty ? 'penalty' : 'goal'
+    return {
+      matchId,
+      kind,
+      side,
+      min: `${minNumOf(g.minute)}'`,
+      minNum: minNumOf(g.minute),
+      player: g.name,
+      detail: g.penalty ? 'Su calcio di rigore' : g.owngoal ? 'Autogol' : undefined,
     }
+  })
+}
+
+interface Mapped {
+  matches: Match[]
+  events: MatchEvent[]
+}
+
+function mapOpenFootball(data: OfData): Mapped {
+  const matches: Match[] = []
+  const events: MatchEvent[] = []
+  let autoNum = 0 // assegna numero progressivo alle gare prive di `num` (gironi)
+
+  for (const m of data.matches ?? []) {
+    const home = codeFor(m.team1)
+    const away = codeFor(m.team2)
+    const kickoff = toUtcIso(m.date, m.time)
+    if (!home || !away || !kickoff) continue
+
+    const num = m.num ?? ++autoNum
+    const id = `of${num}`
+    const ft = m.score?.ft
+    const played = Array.isArray(ft) && ft.length === 2
+
+    matches.push({
+      id,
+      num,
+      kickoff,
+      status: played ? 'ft' : 'sched',
+      home,
+      away,
+      hs: played ? ft![0] : undefined,
+      as: played ? ft![1] : undefined,
+      group: m.group ? m.group.replace(/^Group\s+/i, '').trim() : null,
+    })
+    events.push(...goalEvents(id, m.goals1, 'home'), ...goalEvents(id, m.goals2, 'away'))
   }
-  return out
+  return { matches, events }
 }
 
 /**
- * Aggiorna i dati da fonte pubblica (best-effort). In caso di errore o dati
- * insufficienti mantiene quanto già presente (seed o sync precedente).
+ * Aggiorna i dati da openfootball (best-effort). Su successo sostituisce il
+ * dataset (seed o sync precedente) per evitare id misti. In caso di errore o
+ * dati insufficienti mantiene quanto già presente.
  * @returns true se ha applicato dati remoti.
  */
 export async function sync(): Promise<boolean> {
@@ -81,11 +134,17 @@ export async function sync(): Promise<boolean> {
   try {
     const res = await fetch(OPENFOOTBALL_URL, { cache: 'no-cache' })
     if (!res.ok) return false
-    const data = (await res.json()) as OpenFootballData
-    const mapped = mapOpenFootball(data)
-    // Applica solo se il dataset remoto è plausibile (evita di svuotare la UI).
-    if (mapped.length < 32) return false
-    await db.matches.bulkPut(mapped)
+    const data = (await res.json()) as OfData
+    const { matches, events } = mapOpenFootball(data)
+    // Applica solo se plausibile (il Mondiale ha 104 gare) per non svuotare la UI.
+    if (matches.length < 32) return false
+
+    await db.transaction('rw', db.matches, db.events, async () => {
+      await db.matches.clear()
+      await db.matches.bulkPut(matches)
+      await db.events.clear()
+      if (events.length) await db.events.bulkAdd(events)
+    })
     await db.meta.put({
       key: 'openfootball',
       etag: res.headers.get('etag') ?? undefined,
