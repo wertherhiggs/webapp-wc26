@@ -1,24 +1,49 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted, watch } from 'vue'
 import BottomNav from '@/components/BottomNav.vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useMatchesStore } from '@/stores/matches'
 import { useFavoritesStore } from '@/stores/favorites'
 import { usePredictionsStore } from '@/stores/predictions'
-import { checkAndNotify } from '@/services/notifications'
+import { checkAndNotify, checkGoals, permission } from '@/services/notifications'
 
 const settings = useSettingsStore()
 const matches = useMatchesStore()
 const favorites = useFavoritesStore()
 const predictions = usePredictionsStore()
 
+const GOAL_POLL_MS = 60_000
+let goalTimer: number | undefined
+
+function stopGoalPolling() {
+  if (goalTimer) clearInterval(goalTimer)
+  goalTimer = undefined
+}
+function startGoalPolling() {
+  stopGoalPolling()
+  checkGoals(matches.matches) // imposta la baseline subito
+  goalTimer = window.setInterval(async () => {
+    await matches.refresh()
+    await checkGoals(matches.matches)
+  }, GOAL_POLL_MS)
+}
+
 onMounted(async () => {
   await Promise.all([settings.load(), favorites.load(), predictions.load()])
   await matches.load()
-  // aggiornamento dati in background (best-effort)
+  // aggiornamento dati in background (best-effort) + promemoria mezzogiorno
   matches.refresh().then(() => checkAndNotify(matches.matches))
   checkAndNotify(matches.matches)
+  if (settings.notifGoals && permission() === 'granted') startGoalPolling()
 })
+
+onUnmounted(stopGoalPolling)
+
+// avvia/ferma il polling gol quando il toggle cambia
+watch(
+  () => settings.notifGoals,
+  (on) => (on && permission() === 'granted' ? startGoalPolling() : stopGoalPolling()),
+)
 </script>
 
 <template>

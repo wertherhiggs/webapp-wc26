@@ -67,3 +67,41 @@ export async function checkAndNotify(matches: Match[]): Promise<void> {
     await db.notified.put({ matchId: m.id, at: Date.now() })
   }
 }
+
+const goalKey = (id: string) => `goals:${id}`
+
+async function isFavorite(m: Match): Promise<boolean> {
+  const favTeams = new Set((await db.favoriteTeams.toArray()).map((t) => t.code))
+  if (favTeams.has(m.home) || favTeams.has(m.away)) return true
+  return !!(await db.favoriteMatches.get(m.id))
+}
+
+/**
+ * Notifica gol in tempo reale (best-effort, solo ad app aperta): confronta il
+ * totale gol delle gare LIVE preferite con la baseline salvata; a ogni
+ * incremento mostra una notifica. Richiede polling esterno (vedi App.vue).
+ */
+export async function checkGoals(matches: Match[]): Promise<void> {
+  if (!isSupported() || permission() !== 'granted') return
+  if ((await db.settings.get('notif:goals'))?.value !== true) return
+
+  for (const m of matches) {
+    if (m.status !== 'live') continue
+    if (!(await isFavorite(m))) continue
+
+    const total = (m.hs ?? 0) + (m.as ?? 0)
+    const prev = (await db.settings.get(goalKey(m.id)))?.value as number | undefined
+    if (prev == null) {
+      await db.settings.put({ key: goalKey(m.id), value: total }) // baseline, no notifica
+      continue
+    }
+    if (total > prev) {
+      await show(
+        'GOL! ⚽',
+        `${teamName(m.home)} ${m.hs ?? 0} - ${m.as ?? 0} ${teamName(m.away)} (${m.minute ?? ''}')`,
+        `goal-${m.id}`,
+      )
+      await db.settings.put({ key: goalKey(m.id), value: total })
+    }
+  }
+}
