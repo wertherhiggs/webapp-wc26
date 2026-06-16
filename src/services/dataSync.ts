@@ -65,6 +65,17 @@ function toUtcIso(date?: string, time?: string): string | null {
   return new Date(Date.UTC(y, mo - 1, d, hh - off, mm)).toISOString()
 }
 
+/** Round di eliminazione dal numero gara (formato 2026). */
+function stageOf(num: number): string | undefined {
+  if (num >= 73 && num <= 88) return 'R32'
+  if (num >= 89 && num <= 96) return 'R16'
+  if (num >= 97 && num <= 100) return 'QF'
+  if (num >= 101 && num <= 102) return 'SF'
+  if (num === 103) return '3P'
+  if (num === 104) return 'F'
+  return undefined
+}
+
 function minNumOf(minute?: string | number): number {
   if (minute == null) return 0
   const m = /(\d+)/.exec(String(minute))
@@ -106,6 +117,11 @@ function mapOpenFootball(data: OfData): Mapped {
     const id = `of${num}`
     const ft = m.score?.ft
     const played = Array.isArray(ft) && ft.length === 2
+    const stage = stageOf(num)
+    // Nel knockout le squadre possono essere segnaposto ("Winner Group A", "1A"):
+    // se il nome non è una nazione nota lo conserviamo come placeholder.
+    const homeResolved = !!NAME_TO_CODE[(m.team1 ?? '').trim()]
+    const awayResolved = !!NAME_TO_CODE[(m.team2 ?? '').trim()]
 
     matches.push({
       id,
@@ -117,6 +133,9 @@ function mapOpenFootball(data: OfData): Mapped {
       hs: played ? ft![0] : undefined,
       as: played ? ft![1] : undefined,
       group: m.group ? m.group.replace(/^Group\s+/i, '').trim() : null,
+      stage,
+      homePlaceholder: stage && !homeResolved ? m.team1 : undefined,
+      awayPlaceholder: stage && !awayResolved ? m.team2 : undefined,
     })
     events.push(...goalEvents(id, m.goals1, 'home'), ...goalEvents(id, m.goals2, 'away'))
   }

@@ -115,6 +115,13 @@ export const useMatchesStore = defineStore('matches', () => {
     sortedByKickoff.value.filter((m) => m.status === 'sched'),
   )
 
+  /** Gare di eliminazione (con stage), ordinate per numero gara. */
+  const knockoutMatches = computed(() =>
+    matches.value
+      .filter((m) => m.stage)
+      .sort((a, b) => (a.num ?? 0) - (b.num ?? 0)),
+  )
+
   function matchesForTeam(code: string): Match[] {
     return sortedByKickoff.value.filter((m) => m.home === code || m.away === code)
   }
@@ -127,6 +134,6 @@ export const useMatchesStore = defineStore('matches', () => {
     matches, events, venues, standings, scorers, loaded, syncing, lastSyncAt,
     load, refresh, compute,
     getById, eventsFor, footerFor, matchesForTeam, venueById,
-    todayMatches, recentMatches, liveCount, scheduledMatches, sortedByKickoff,
+    todayMatches, recentMatches, liveCount, scheduledMatches, knockoutMatches, sortedByKickoff,
   }
 })
