@@ -13,6 +13,7 @@ export const router = createRouter({
     { path: '/pronostici', name: 'pronostici', component: () => import('@/pages/PronosticiView.vue') },
     { path: '/squadra/:code', name: 'squadra', component: () => import('@/pages/SquadraView.vue'), props: true },
     { path: '/stadi', name: 'stadi', component: () => import('@/pages/StadiView.vue') },
+    { path: '/stadio/:id', name: 'stadio', component: () => import('@/pages/StadioDetailView.vue'), props: true },
     { path: '/partita/:id', name: 'dettaglio', component: () => import('@/pages/DettaglioPartitaView.vue'), props: true },
   ],
 })

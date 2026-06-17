@@ -6,7 +6,6 @@ import ToggleSwitch from '@/components/ToggleSwitch.vue'
 import { useFavoritesStore } from '@/stores/favorites'
 import { useMatchesStore } from '@/stores/matches'
 import { useSettingsStore } from '@/stores/settings'
-import { usePredictionsStore } from '@/stores/predictions'
 import { teamName } from '@/data/teams'
 import { romeShortDay, romeTime } from '@/services/time'
 import { requestPermission } from '@/services/notifications'
@@ -15,7 +14,6 @@ const router = useRouter()
 const favorites = useFavoritesStore()
 const matches = useMatchesStore()
 const settings = useSettingsStore()
-const predictions = usePredictionsStore()
 
 const followed = computed(() =>
   [...favorites.teams].map((code) => {
@@ -29,11 +27,6 @@ const followed = computed(() =>
     }
   }),
 )
-
-const predScore = computed(() =>
-  predictions.buildHistory(matches.matches).reduce((s, h) => s + h.pts, 0),
-)
-const predCount = computed(() => Object.keys(predictions.map).length)
 
 async function onToggleNoon(v: boolean) {
   if (v) {
@@ -77,19 +70,6 @@ async function onToggleGoals(v: boolean) {
         </button>
       </div>
     </div>
-
-    <button class="big pron" @click="router.push({ name: 'pronostici' })">
-      <span class="bicon vio"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg></span>
-      <div class="btxt"><div class="bb">{{ $t('preferiti.predictions') }}</div><div class="bsub">{{ predScore }} punti · {{ predCount }} pronostici</div></div>
-      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
-    </button>
-
-    <h2 class="h2 sec">{{ $t('preferiti.explore') }}</h2>
-    <button class="big card" @click="router.push({ name: 'stadi' })">
-      <span class="bicon turq"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z" /><circle cx="12" cy="11" r="2.2" /></svg></span>
-      <div class="btxt"><div class="bb dark">{{ $t('preferiti.stadi') }}</div><div class="muted">{{ $t('preferiti.stadiSub') }}</div></div>
-      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
-    </button>
 
     <h2 class="h2 sec">{{ $t('preferiti.notifications') }}</h2>
     <div class="card notif">

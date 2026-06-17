@@ -70,13 +70,14 @@ const chips: { key: 'all' | 'CAN' | 'USA' | 'MEX'; label: string }[] = [
     </div>
 
     <div class="list">
-      <div v-for="s in cities" :key="s.id" class="srow card">
+      <button v-for="s in cities" :key="s.id" class="srow card" @click="router.push({ name: 'stadio', params: { id: s.id } })">
         <span class="sicon" :style="{ background: s.color }">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z" /><circle cx="12" cy="11" r="2.2" /></svg>
         </span>
         <div class="sinfo"><div class="scity">{{ s.city }}</div><div class="muted sstad">{{ s.stadium }}</div></div>
         <div class="cnt"><div class="n">{{ s.count }}</div><div class="label">gare</div></div>
-      </div>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+      </button>
     </div>
   </div>
 </template>
@@ -154,7 +155,10 @@ const chips: { key: 'all' | 'CAN' | 'USA' | 'MEX'; label: string }[] = [
   gap: 13px;
   padding: 13px 15px;
   border-radius: 18px;
+  width: 100%;
+  text-align: left;
 }
+.chev { flex-shrink: 0; }
 .sicon {
   width: 36px;
   height: 36px;

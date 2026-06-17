@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { teamFlag, flagBackground, teamFlagEmoji } from '@/data/teams'
 
 const props = withDefaults(
-  defineProps<{ code: string; size?: 'sm' | 'md' | 'lg' }>(),
+  defineProps<{ code: string; size?: 'sm' | 'md' | 'lg' | 'xl' }>(),
   { size: 'md' },
 )
 
@@ -12,6 +12,7 @@ const bg = computed(() => flagBackground(teamFlag(props.code)))
 const dims = computed(() => {
   if (props.size === 'sm') return { w: '28px', h: '20px', r: '3px', f: '20px' }
   if (props.size === 'lg') return { w: '46px', h: '32px', r: '5px', f: '34px' }
+  if (props.size === 'xl') return { w: '92px', h: '64px', r: '8px', f: '64px' }
   return { w: '34px', h: '24px', r: '4px', f: '26px' }
 })
 </script>

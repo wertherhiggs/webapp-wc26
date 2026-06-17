@@ -7,14 +7,20 @@ import type { Match, MatchEvent, Venue, EventKind } from '@/types'
 const OPENFOOTBALL_URL =
   'https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json'
 
+// ground openfootball (es. "Mexico City") → id sede
+const GROUND_TO_ID: Record<string, string> = Object.fromEntries(
+  (venuesJson as Venue[]).filter((v) => v.ground).map((v) => [v.ground as string, v.id]),
+)
+
 /** Popola il DB con il seed al primo avvio (idempotente). */
 export async function ensureSeeded(): Promise<void> {
+  // Le sedi sono dati statici di riferimento: le mantengo sempre aggiornate.
+  await db.venues.bulkPut(venuesJson as Venue[])
   const count = await db.matches.count()
   if (count > 0) return
-  await db.transaction('rw', db.matches, db.events, db.venues, async () => {
+  await db.transaction('rw', db.matches, db.events, async () => {
     await db.matches.bulkPut(SEED_MATCHES)
     await db.events.bulkAdd(SEED_EVENTS)
-    await db.venues.bulkPut(venuesJson as Venue[])
   })
   await db.meta.put({ key: 'seed', lastSync: Date.now(), version: 'seed-1' })
 }
@@ -38,6 +44,7 @@ interface OfMatch {
   goals2?: OfGoal[]
   group?: string
   ground?: string
+  city?: string
 }
 interface OfData {
   name?: string
@@ -134,6 +141,7 @@ function mapOpenFootball(data: OfData): Mapped {
       as: played ? ft![1] : undefined,
       group: m.group ? m.group.replace(/^Group\s+/i, '').trim() : null,
       stage,
+      venueId: m.ground ? GROUND_TO_ID[m.ground.trim()] : undefined,
       homePlaceholder: stage && !homeResolved ? m.team1 : undefined,
       awayPlaceholder: stage && !awayResolved ? m.team2 : undefined,
     })

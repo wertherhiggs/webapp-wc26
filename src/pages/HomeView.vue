@@ -63,13 +63,13 @@ const highlightsUrl =
       <span class="muted sm">{{ matches.todayMatches.length }} {{ $t('common.matches') }}</span>
     </div>
     <div class="list mb">
-      <MatchCard v-for="m in matches.todayMatches" :key="m.id" :match="m" flag-size="lg" />
+      <MatchCard v-for="m in matches.todayMatches" :key="m.id" :match="m" flag-size="xl" />
       <p v-if="matches.todayMatches.length === 0" class="muted sm none">Nessuna partita oggi.</p>
     </div>
 
     <div class="secthd"><span class="h2">{{ $t('home.recent') }}</span></div>
     <div class="list mb">
-      <MatchCard v-for="m in matches.recentMatches" :key="m.id" :match="m" flag-size="lg" />
+      <MatchCard v-for="m in matches.recentMatches" :key="m.id" :match="m" flag-size="xl" />
       <a class="hl card" :href="highlightsUrl" target="_blank" rel="noopener">
         <span class="play">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z" /></svg>

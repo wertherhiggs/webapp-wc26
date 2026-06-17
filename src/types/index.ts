@@ -70,6 +70,10 @@ export interface Venue {
   city: string
   stadium: string
   country: 'CAN' | 'USA' | 'MEX'
+  /** capienza approssimativa */
+  capacity?: number
+  /** stringa `ground` openfootball, per agganciare le gare alla sede */
+  ground?: string
 }
 
 /** Mapping canale TV italiano per gara (curato a mano) */

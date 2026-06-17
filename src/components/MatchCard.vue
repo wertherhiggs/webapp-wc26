@@ -9,7 +9,7 @@ import { romeTime, romeShortDay } from '@/services/time'
 import type { Match } from '@/types'
 
 const props = withDefaults(
-  defineProps<{ match: Match; flagSize?: 'sm' | 'md' | 'lg' }>(),
+  defineProps<{ match: Match; flagSize?: 'sm' | 'md' | 'lg' | 'xl' }>(),
   { flagSize: 'md' },
 )
 const router = useRouter()
