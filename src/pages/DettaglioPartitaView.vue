@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import TeamFlag from '@/components/TeamFlag.vue'
 import { useMatchesStore } from '@/stores/matches'
-import { useFavoritesStore } from '@/stores/favorites'
 import { getTv } from '@/data/tv'
 import { teamName } from '@/data/teams'
 import { statusVm, showScore } from '@/utils/matchVm'
@@ -14,7 +13,6 @@ import type { EventKind } from '@/types'
 const props = defineProps<{ id: string }>()
 const router = useRouter()
 const matches = useMatchesStore()
-const favorites = useFavoritesStore()
 
 const match = computed(() => matches.getById(props.id))
 const tv = computed(() => (match.value ? getTv(match.value) : null))
@@ -22,7 +20,10 @@ const status = computed(() => (match.value ? statusVm(match.value) : null))
 const venue = computed(() => matches.venueById(match.value?.venueId))
 const events = computed(() => matches.eventsFor(props.id))
 const lineups = computed(() => SEED_LINEUPS[props.id])
-const isFav = computed(() => favorites.isMatchFav(props.id))
+
+function openTeam(code: string) {
+  router.push({ name: 'squadra', params: { code } })
+}
 
 const highlightsUrl = computed(() => {
   const m = match.value
@@ -33,11 +34,11 @@ const highlightsUrl = computed(() => {
 
 const evMeta: Record<EventKind, { bg: string; label: string }> = {
   goal: { bg: 'var(--lime)', label: 'Gol' },
-  penalty: { bg: 'var(--lime)', label: 'Rigore' },
+  penalty: { bg: 'var(--lime)', label: 'Gol su rigore' },
   own_goal: { bg: 'var(--lime)', label: 'Autogol' },
   yellow: { bg: 'var(--gold)', label: 'Ammonizione' },
   red: { bg: 'var(--err)', label: 'Espulsione' },
-  sub: { bg: 'var(--turq)', label: 'Cambio' },
+  sub: { bg: 'var(--turq)', label: 'Sostituzione' },
 }
 function evText(kind: EventKind, player: string): string {
   const m = evMeta[kind]?.label ?? ''
@@ -52,9 +53,6 @@ function evText(kind: EventKind, player: string): string {
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
         <span>{{ $t('common.back') }}</span>
       </button>
-      <button class="starbtn" @click="favorites.toggleMatch(match.id)">
-        <svg width="20" height="20" viewBox="0 0 24 24" :fill="isFav ? 'var(--gold)' : 'none'" :stroke="isFav ? 'var(--gold)' : 'var(--muted)'" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 17l-5 2.6 1-5.8L3.8 9.7l5.8-.8z" /></svg>
-      </button>
     </div>
 
     <div class="hero">
@@ -64,15 +62,16 @@ function evText(kind: EventKind, player: string): string {
         </span>
       </div>
       <div class="grid">
-        <div class="team"><TeamFlag :code="match.home" size="lg" /><span>{{ teamName(match.home) }}</span></div>
+        <button class="team" @click="openTeam(match.home)"><TeamFlag :code="match.home" size="lg" /><span>{{ teamName(match.home) }}</span></button>
         <div class="score">
           <template v-if="showScore(match)">
             <span class="n">{{ match.hs }}</span><span class="d">-</span><span class="n">{{ match.as }}</span>
           </template>
           <span v-else class="time">{{ romeTime(match.kickoff) }}</span>
         </div>
-        <div class="team"><TeamFlag :code="match.away" size="lg" /><span>{{ teamName(match.away) }}</span></div>
+        <button class="team" @click="openTeam(match.away)"><TeamFlag :code="match.away" size="lg" /><span>{{ teamName(match.away) }}</span></button>
       </div>
+      <p class="taphint muted">Tocca una squadra per seguirla</p>
       <div class="chrow">
         <span class="chan"><span class="sq" :style="{ background: tv?.color }" />{{ tv?.canale }} · {{ romeTime(match.kickoff) }}</span>
         <span v-if="tv?.inChiaro" class="rai">{{ $t('common.freeRai') }}</span>
@@ -136,16 +135,6 @@ function evText(kind: EventKind, player: string): string {
   font-size: 14px;
   font-weight: 700;
 }
-.starbtn {
-  width: 40px;
-  height: 40px;
-  border-radius: 999px;
-  background: var(--surface);
-  border: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .hero {
   background: #111111;
   border-radius: var(--r-card);
@@ -189,6 +178,17 @@ function evText(kind: EventKind, player: string): string {
   font-size: 15px;
   font-weight: 900;
   text-align: center;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+.taphint {
+  text-align: center;
+  font-size: 11px;
+  color: #9a9a92;
+  margin: -6px 0 0;
 }
 .score {
   display: flex;

@@ -10,7 +10,7 @@ import type { Match } from '@/types'
 
 const props = withDefaults(
   defineProps<{ match: Match; flagSize?: 'sm' | 'md' | 'lg' | 'xl' }>(),
-  { flagSize: 'md' },
+  { flagSize: 'xl' },
 )
 const router = useRouter()
 const store = useMatchesStore()

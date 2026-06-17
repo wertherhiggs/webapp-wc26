@@ -71,6 +71,17 @@ async function onToggleGoals(v: boolean) {
       </div>
     </div>
 
+    <h2 class="h2 sec">{{ $t('preferiti.countdown') }}</h2>
+    <div class="card notif">
+      <div class="nrow">
+        <div class="ntxt">
+          <div class="nb">{{ $t('preferiti.countdownRai') }}</div>
+          <div class="muted ns">{{ settings.countdownRaiOnly ? $t('preferiti.countdownRaiSub') : $t('preferiti.countdownAllSub') }}</div>
+        </div>
+        <ToggleSwitch :model-value="settings.countdownRaiOnly" @update:model-value="(v: boolean) => (settings.countdownRaiOnly = v)" />
+      </div>
+    </div>
+
     <h2 class="h2 sec">{{ $t('preferiti.notifications') }}</h2>
     <div class="card notif">
       <div class="nrow">

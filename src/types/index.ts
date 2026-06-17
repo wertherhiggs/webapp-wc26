@@ -74,6 +74,8 @@ export interface Venue {
   capacity?: number
   /** stringa `ground` openfootball, per agganciare le gare alla sede */
   ground?: string
+  /** URL foto dello stadio (gallery); se assenti si usano tile decorative */
+  photos?: string[]
 }
 
 /** Mapping canale TV italiano per gara (curato a mano) */

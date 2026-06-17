@@ -8,12 +8,20 @@ const props = defineProps<{ id: string }>()
 const router = useRouter()
 const matches = useMatchesStore()
 
-const COUNTRY = { CAN: 'Canada', USA: 'Stati Uniti', MEX: 'Messico' } as const
+const COUNTRY = {
+  CAN: { name: 'Canada', color: 'var(--turq)' },
+  USA: { name: 'Stati Uniti', color: 'var(--gold)' },
+  MEX: { name: 'Messico', color: 'var(--coral)' },
+} as const
 
 const venue = computed(() => matches.venueById(props.id))
 const games = computed(() =>
   matches.sortedByKickoff.filter((m) => m.venueId === props.id),
 )
+
+// Galleria: usa foto reali se presenti in venues.json, altrimenti tile decorative.
+const photos = computed(() => venue.value?.photos ?? [])
+const accent = computed(() => (venue.value ? COUNTRY[venue.value.country].color : 'var(--turq)'))
 </script>
 
 <template>
@@ -29,8 +37,24 @@ const games = computed(() =>
       </span>
       <div class="htitle">
         <div class="h1">{{ venue.stadium }}</div>
-        <div class="muted">{{ venue.city }} · {{ COUNTRY[venue.country] }}</div>
+        <div class="muted">{{ venue.city }} · {{ COUNTRY[venue.country].name }}</div>
       </div>
+    </div>
+
+    <div data-hscroll class="gallery">
+      <template v-if="photos.length">
+        <img v-for="(src, i) in photos" :key="i" class="shot" :src="src" :alt="venue.stadium" loading="lazy" />
+      </template>
+      <template v-else>
+        <div v-for="i in 3" :key="i" class="shot ph" :style="{ '--accent': accent }">
+          <svg viewBox="0 0 64 40" width="64" height="40" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 30c8-9 18-13 28-13s20 4 28 13" />
+            <path d="M4 30v6h56v-6" />
+            <path d="M20 17V9h24v8M32 9V4" />
+          </svg>
+          <span class="cap">{{ venue.city }}</span>
+        </div>
+      </template>
     </div>
 
     <div class="stats">
@@ -82,6 +106,40 @@ const games = computed(() =>
   flex-shrink: 0;
 }
 .htitle { min-width: 0; }
+.gallery {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin: 0 -16px 18px;
+  padding-left: 16px;
+  padding-right: 16px;
+  scroll-snap-type: x mandatory;
+}
+.shot {
+  flex: 0 0 auto;
+  width: 230px;
+  height: 140px;
+  border-radius: 18px;
+  object-fit: cover;
+  scroll-snap-align: start;
+  border: 0.5px solid var(--border);
+}
+.shot.ph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 78%, #111) 0%, color-mix(in srgb, var(--accent) 32%, #111) 100%);
+}
+.shot.ph .cap {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
 .stats {
   display: grid;
   grid-template-columns: 1fr 1fr;

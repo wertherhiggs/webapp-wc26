@@ -5,22 +5,26 @@ import MatchCard from '@/components/MatchCard.vue'
 import CountdownCard from '@/components/CountdownCard.vue'
 import { useMatchesStore } from '@/stores/matches'
 import { useFavoritesStore } from '@/stores/favorites'
-import { raiFreeCount } from '@/data/tv'
+import { useSettingsStore } from '@/stores/settings'
+import { getTv, raiFreeCount } from '@/data/tv'
 import { romeDayLabel } from '@/services/time'
 
 const router = useRouter()
 const matches = useMatchesStore()
 const favorites = useFavoritesStore()
+const settings = useSettingsStore()
 
 const todayLabel = computed(() => romeDayLabel(new Date().toISOString()))
 
+// Prossima gara più vicina tra tutte le squadre preferite; se l'utente ha scelto
+// "solo RAI" nelle preferenze, considera solo le gare in chiaro.
 const nextFav = computed(() =>
-  matches.scheduledMatches.find(
-    (m) =>
-      favorites.matches.has(m.id) ||
-      favorites.teams.has(m.home) ||
-      favorites.teams.has(m.away),
-  ),
+  matches.scheduledMatches.find((m) => {
+    const isFav = favorites.teams.has(m.home) || favorites.teams.has(m.away)
+    if (!isFav) return false
+    if (settings.countdownRaiOnly && !getTv(m).inChiaro) return false
+    return true
+  }),
 )
 const favTeamOf = computed(() => {
   const m = nextFav.value
@@ -60,16 +64,16 @@ const highlightsUrl =
 
     <div class="secthd">
       <span class="h2">{{ $t('home.todayMatches') }}</span>
-      <span class="muted sm">{{ matches.todayMatches.length }} {{ $t('common.matches') }}</span>
+      <span class="muted sm">{{ matches.todayUpcoming.length }} {{ $t('common.matches') }}</span>
     </div>
     <div class="list mb">
-      <MatchCard v-for="m in matches.todayMatches" :key="m.id" :match="m" flag-size="xl" />
-      <p v-if="matches.todayMatches.length === 0" class="muted sm none">Nessuna partita oggi.</p>
+      <MatchCard v-for="m in matches.todayUpcoming" :key="m.id" :match="m" />
+      <p v-if="matches.todayUpcoming.length === 0" class="muted sm none">Nessuna partita in programma oggi.</p>
     </div>
 
     <div class="secthd"><span class="h2">{{ $t('home.recent') }}</span></div>
     <div class="list mb">
-      <MatchCard v-for="m in matches.recentMatches" :key="m.id" :match="m" flag-size="xl" />
+      <MatchCard v-for="m in matches.recentMatches" :key="m.id" :match="m" />
       <a class="hl card" :href="highlightsUrl" target="_blank" rel="noopener">
         <span class="play">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z" /></svg>

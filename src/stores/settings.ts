@@ -8,6 +8,8 @@ export const useSettingsStore = defineStore('settings', () => {
   const theme = ref<Theme>('light')
   const notifNoon = ref(true)
   const notifGoals = ref(false)
+  /** Conto alla rovescia in Home: solo gare in chiaro RAI tra le preferite. */
+  const countdownRaiOnly = ref(false)
   const ready = ref(false)
 
   function applyTheme() {
@@ -25,6 +27,8 @@ export const useSettingsStore = defineStore('settings', () => {
     if (typeof n === 'boolean') notifNoon.value = n
     const g = (await db.settings.get('notif:goals'))?.value
     if (typeof g === 'boolean') notifGoals.value = g
+    const cr = (await db.settings.get('countdown:raiOnly'))?.value
+    if (typeof cr === 'boolean') countdownRaiOnly.value = cr
     applyTheme()
     ready.value = true
   }
@@ -39,6 +43,7 @@ export const useSettingsStore = defineStore('settings', () => {
   })
   watch(notifNoon, (v) => ready.value && db.settings.put({ key: 'notif:noon', value: v }))
   watch(notifGoals, (v) => ready.value && db.settings.put({ key: 'notif:goals', value: v }))
+  watch(countdownRaiOnly, (v) => ready.value && db.settings.put({ key: 'countdown:raiOnly', value: v }))
 
-  return { theme, notifNoon, notifGoals, ready, load, toggleTheme }
+  return { theme, notifNoon, notifGoals, countdownRaiOnly, ready, load, toggleTheme }
 })

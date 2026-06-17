@@ -102,6 +102,11 @@ export const useMatchesStore = defineStore('matches', () => {
     return sortedByKickoff.value.filter((m) => romeDayKey(m.kickoff) === today)
   })
 
+  /** Partite di oggi non ancora terminate (in programma o live). */
+  const todayUpcoming = computed(() =>
+    todayMatches.value.filter((m) => m.status !== 'ft'),
+  )
+
   const recentMatches = computed(() =>
     [...matches.value]
       .filter((m) => m.status === 'ft')
@@ -134,6 +139,6 @@ export const useMatchesStore = defineStore('matches', () => {
     matches, events, venues, standings, scorers, loaded, syncing, lastSyncAt,
     load, refresh, compute,
     getById, eventsFor, footerFor, matchesForTeam, venueById,
-    todayMatches, recentMatches, liveCount, scheduledMatches, knockoutMatches, sortedByKickoff,
+    todayMatches, todayUpcoming, recentMatches, liveCount, scheduledMatches, knockoutMatches, sortedByKickoff,
   }
 })

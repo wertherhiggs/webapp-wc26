@@ -19,7 +19,7 @@
     "noData": "Cronaca non disponibile"
   },
   "home": {
-    "todayMatches": "Partite di oggi",
+    "todayMatches": "Partite in programma di oggi",
     "recent": "Ultime giocate",
     "nextFav": "Prossima preferita",
     "countdown": "Conto alla rovescia",
@@ -76,6 +76,10 @@
     "explore": "Esplora",
     "stadi": "Stadi e città",
     "stadiSub": "16 sedi in Canada, USA e Messico",
+    "countdown": "Conto alla rovescia in Home",
+    "countdownRai": "Solo partite in chiaro RAI",
+    "countdownRaiSub": "Il countdown mostra la prossima gara RAI delle tue squadre",
+    "countdownAllSub": "Il countdown mostra la prossima gara delle tue squadre",
     "notifications": "Notifiche",
     "notifNoon": "Promemoria a mezzogiorno",
     "notifNoonSub": "Avviso il giorno della gara delle tue squadre",
