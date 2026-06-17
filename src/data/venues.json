@@ -1,18 +1,225 @@
 [
-  { "id": "tor", "city": "Toronto", "stadium": "BMO Field", "country": "CAN", "capacity": 45000, "ground": "Toronto" },
-  { "id": "van", "city": "Vancouver", "stadium": "BC Place", "country": "CAN", "capacity": 54000, "ground": "Vancouver" },
-  { "id": "mex", "city": "Città del Messico", "stadium": "Estadio Azteca", "country": "MEX", "capacity": 83000, "ground": "Mexico City" },
-  { "id": "gdl", "city": "Guadalajara", "stadium": "Estadio Akron", "country": "MEX", "capacity": 48000, "ground": "Guadalajara (Zapopan)" },
-  { "id": "mty", "city": "Monterrey", "stadium": "Estadio BBVA", "country": "MEX", "capacity": 53500, "ground": "Monterrey (Guadalupe)" },
-  { "id": "atl", "city": "Atlanta", "stadium": "Mercedes-Benz Stadium", "country": "USA", "capacity": 75000, "ground": "Atlanta" },
-  { "id": "bos", "city": "Boston", "stadium": "Gillette Stadium", "country": "USA", "capacity": 65000, "ground": "Boston (Foxborough)" },
-  { "id": "dal", "city": "Dallas", "stadium": "AT&T Stadium", "country": "USA", "capacity": 94000, "ground": "Dallas (Arlington)" },
-  { "id": "hou", "city": "Houston", "stadium": "NRG Stadium", "country": "USA", "capacity": 72000, "ground": "Houston" },
-  { "id": "kan", "city": "Kansas City", "stadium": "Arrowhead Stadium", "country": "USA", "capacity": 73000, "ground": "Kansas City" },
-  { "id": "lax", "city": "Los Angeles", "stadium": "SoFi Stadium", "country": "USA", "capacity": 70000, "ground": "Los Angeles (Inglewood)" },
-  { "id": "mia", "city": "Miami", "stadium": "Hard Rock Stadium", "country": "USA", "capacity": 65000, "ground": "Miami (Miami Gardens)" },
-  { "id": "nyc", "city": "New York / NJ", "stadium": "MetLife Stadium", "country": "USA", "capacity": 82500, "ground": "New York/New Jersey (East Rutherford)" },
-  { "id": "phi", "city": "Filadelfia", "stadium": "Lincoln Financial Field", "country": "USA", "capacity": 69000, "ground": "Philadelphia" },
-  { "id": "sfo", "city": "San Francisco", "stadium": "Levi's Stadium", "country": "USA", "capacity": 71000, "ground": "San Francisco Bay Area (Santa Clara)" },
-  { "id": "sea", "city": "Seattle", "stadium": "Lumen Field", "country": "USA", "capacity": 69000, "ground": "Seattle" }
+  {
+    "id": "tor",
+    "city": "Toronto",
+    "stadium": "BMO Field",
+    "country": "CAN",
+    "capacity": 45000,
+    "ground": "Toronto",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Toronto_BMO_Field_in_2024.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/West-stand-bmo-field.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/MLS_Cup_2010_Toronto_15_%285202773278%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/BMO_Field_in_2016.png?width=800"
+    ]
+  },
+  {
+    "id": "van",
+    "city": "Vancouver",
+    "stadium": "BC Place",
+    "country": "CAN",
+    "capacity": 54000,
+    "ground": "Vancouver",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/BC_Place_2015_Women%27s_FIFA_World_Cup.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/DSC02685_%2851338784%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/BCplace_stadium.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/BCPlaceRoofApril2011.jpg?width=800"
+    ]
+  },
+  {
+    "id": "mex",
+    "city": "Città del Messico",
+    "stadium": "Estadio Azteca",
+    "country": "MEX",
+    "capacity": 83000,
+    "ground": "Mexico City",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Vista_a%C3%A9rea_del_Estadio_Azteca_-_2026_-_02.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Mexico_stadium_1986.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Estadio_Azteca_%282011-09-25%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Azteca_zona_de_bancas.jpg?width=800"
+    ]
+  },
+  {
+    "id": "gdl",
+    "city": "Guadalajara",
+    "stadium": "Estadio Akron",
+    "country": "MEX",
+    "capacity": 48000,
+    "ground": "Guadalajara (Zapopan)",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Estadio_Akron_02-07-2022_cabecera_sur_lado_derecho_%283%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Omnilife_Stadium.png?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/South_Corea-Czechia2026FWC.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Estadio_Omnilife.jpg?width=800"
+    ]
+  },
+  {
+    "id": "mty",
+    "city": "Monterrey",
+    "stadium": "Estadio BBVA",
+    "country": "MEX",
+    "capacity": 53500,
+    "ground": "Monterrey (Guadalupe)",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Mexico_Guadalupe_Monterrey_Estadio_BBVA_Bancomer_fifa_world_cup_2026_6.JPG?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Estadio_BBVA_Bancomer_-_Diciembre_2017.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Estadio_BBVA.jpg?width=800"
+    ]
+  },
+  {
+    "id": "atl",
+    "city": "Atlanta",
+    "stadium": "Mercedes-Benz Stadium",
+    "country": "USA",
+    "capacity": 75000,
+    "ground": "Atlanta",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes_Benz_Stadium_time_lapse_capture_2017-08-13.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Atlanta_Falcons_sculpture_Mercedes-Benz_Stadium_2017-09-19.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes_Benz_Stadium_interior_2017-08-25_1.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Overhead_shot_of_Georgia_Dome%2C_New_Falcons_stadium_construction_site_April_25%2C_2014.jpg?width=800"
+    ]
+  },
+  {
+    "id": "bos",
+    "city": "Boston",
+    "stadium": "Gillette Stadium",
+    "country": "USA",
+    "capacity": 65000,
+    "ground": "Boston (Foxborough)",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Gillette_Stadium_%28Top_View%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Stadiumguillete_%28cropped%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Gillette_Stadium_video_board_2023_Army-Navy_Game_231209-N-QE848-1226_%2853393505303%29_%28cropped%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Gillette_Stadium02.jpg?width=800"
+    ]
+  },
+  {
+    "id": "dal",
+    "city": "Dallas",
+    "stadium": "AT&T Stadium",
+    "country": "USA",
+    "capacity": 94000,
+    "ground": "Dallas (Arlington)",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Arlington_June_2020_4_%28AT%26T_Stadium%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Cowboys_Stadium_full_view.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Armed_Forces_Color_Guard_at_Super_Bowl_XLV_1.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/ATT_Stadium_Roof_Open.jpg?width=800"
+    ]
+  },
+  {
+    "id": "hou",
+    "city": "Houston",
+    "stadium": "NRG Stadium",
+    "country": "USA",
+    "capacity": 72000,
+    "ground": "Houston",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Nrg_stadium.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/NRGStadiumnew.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/NRG_stadium_prepared_for_Super_Bowl_Li_%2832513086661%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/NRG_Stadium_SBLI_Outside.jpg?width=800"
+    ]
+  },
+  {
+    "id": "kan",
+    "city": "Kansas City",
+    "stadium": "Arrowhead Stadium",
+    "country": "USA",
+    "capacity": 73000,
+    "ground": "Kansas City",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Aerial_view_of_Arrowhead_Stadium_08-31-2013.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Arrowhead_Stadium_%28October_27%2C_2019_-_7%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Mahomes_cadence_-_Browns_at_Chiefs%2C_2021.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/25_July_2010_Kansas_City_Wizards_vs_Manchester_United_friendly.jpg?width=800"
+    ]
+  },
+  {
+    "id": "lax",
+    "city": "Los Angeles",
+    "stadium": "SoFi Stadium",
+    "country": "USA",
+    "capacity": 70000,
+    "ground": "Los Angeles (Inglewood)",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/SoFi_Stadium_2023.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Sofi_Stadium_Entrance_2021.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/SoFi_Stadium_East_facade.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/SoFi_Stadium_2022.jpg?width=800"
+    ]
+  },
+  {
+    "id": "mia",
+    "city": "Miami",
+    "stadium": "Hard Rock Stadium",
+    "country": "USA",
+    "capacity": 65000,
+    "ground": "Miami (Miami Gardens)",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Hard_Rock_Stadium_for_Super_Bowl_LIV_%2849606710103%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Jrs1.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Dolphinstadiumint.JPG?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Sun_Life_Stadium_aerial_2012.jpg?width=800"
+    ]
+  },
+  {
+    "id": "nyc",
+    "city": "New York / NJ",
+    "stadium": "MetLife Stadium",
+    "country": "USA",
+    "capacity": 82500,
+    "ground": "New York/New Jersey (East Rutherford)",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Metlife_stadium_%28Aerial_view%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Newmeadowlands1207.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Giant%27s_Stadium_Old_and_New.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Meadowlands_Sports_Complex_-_kingsley_-_04-JUL-09.JPG?width=800"
+    ]
+  },
+  {
+    "id": "phi",
+    "city": "Filadelfia",
+    "stadium": "Lincoln Financial Field",
+    "country": "USA",
+    "capacity": 69000,
+    "ground": "Philadelphia",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Lincoln_Financial_Field_%28Aerial_view%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/TheLinc-outside.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Lincoln_Financial_Field%2C_Philadelphia.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/EaglesVsDolphinsNov15.jpg?width=800"
+    ]
+  },
+  {
+    "id": "sfo",
+    "city": "San Francisco",
+    "stadium": "Levi's Stadium",
+    "country": "USA",
+    "capacity": 71000,
+    "ground": "San Francisco Bay Area (Santa Clara)",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Levi%27s_Stadium_in_February_2016_prior_to_Super_Bowl_50_%2824398261729%29.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Broncos_vs_49ers_preseason_game_at_Levi%27s_Stadium.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/San_Tomas_Aquino_Creek_and_Levi%27s_Stadium.JPG?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/49ers_New_Stadium_2_2013-07-11.jpg?width=800"
+    ]
+  },
+  {
+    "id": "sea",
+    "city": "Seattle",
+    "stadium": "Lumen Field",
+    "country": "USA",
+    "capacity": 69000,
+    "ground": "Seattle",
+    "photos": [
+      "https://commons.wikimedia.org/wiki/Special:FilePath/2025_FIFA_Club_World_Cup_-_Seattle_Sounders_FC_vs._Atl%C3%A9tico_Madrid_-_05.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Qwest_Field_%28Seahawks_Stadium%29_under_construction_-_2001.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Aerial_of_Qwest_Field_and_downtown_skyline%2C_2002.jpg?width=800",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/CenturyLink_Field_Sounders_layout.jpg?width=800"
+    ]
+  }
 ]

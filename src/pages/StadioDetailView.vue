@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import MatchCard from '@/components/MatchCard.vue'
 import { useMatchesStore } from '@/stores/matches'
@@ -19,9 +19,14 @@ const games = computed(() =>
   matches.sortedByKickoff.filter((m) => m.venueId === props.id),
 )
 
-// Galleria: usa foto reali se presenti in venues.json, altrimenti tile decorative.
-const photos = computed(() => venue.value?.photos ?? [])
+// Galleria: foto reali da venues.json (Wikimedia). Le immagini che non caricano
+// vengono scartate; se non ne resta nessuna si mostrano tile decorative.
 const accent = computed(() => (venue.value ? COUNTRY[venue.value.country].color : 'var(--turq)'))
+const failed = ref<Set<string>>(new Set())
+const photos = computed(() => (venue.value?.photos ?? []).filter((p) => !failed.value.has(p)))
+function onErr(src: string) {
+  failed.value = new Set(failed.value).add(src)
+}
 </script>
 
 <template>
@@ -43,7 +48,7 @@ const accent = computed(() => (venue.value ? COUNTRY[venue.value.country].color 
 
     <div data-hscroll class="gallery">
       <template v-if="photos.length">
-        <img v-for="(src, i) in photos" :key="i" class="shot" :src="src" :alt="venue.stadium" loading="lazy" />
+        <img v-for="src in photos" :key="src" class="shot" :src="src" :alt="venue.stadium" loading="lazy" referrerpolicy="no-referrer" @error="onErr(src)" />
       </template>
       <template v-else>
         <div v-for="i in 3" :key="i" class="shot ph" :style="{ '--accent': accent }">

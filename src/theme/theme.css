@@ -59,6 +59,9 @@ body {
 button {
   font-family: inherit;
   cursor: pointer;
+  /* Senza questo i <button> usano il colore di default dello UA (nero): nel tema
+     scuro i testi interni senza color esplicito risultano invisibili. */
+  color: inherit;
 }
 
 a {

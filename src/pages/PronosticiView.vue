@@ -44,7 +44,7 @@ const tagColor = (tag: string) =>
         </div>
         <div class="prow">
           <div class="side" @click="router.push({ name: 'squadra', params: { code: m.home } })">
-            <TeamFlag :code="m.home" /><span class="code">{{ m.home }}</span>
+            <TeamFlag :code="m.home" size="xl" /><span class="code">{{ m.home }}</span>
           </div>
           <div class="stepper">
             <div class="col">
@@ -60,7 +60,7 @@ const tagColor = (tag: string) =>
             </div>
           </div>
           <div class="side" @click="router.push({ name: 'squadra', params: { code: m.away } })">
-            <TeamFlag :code="m.away" /><span class="code">{{ m.away }}</span>
+            <TeamFlag :code="m.away" size="xl" /><span class="code">{{ m.away }}</span>
           </div>
         </div>
         <div v-if="predictions.map[m.id]" class="saved">
