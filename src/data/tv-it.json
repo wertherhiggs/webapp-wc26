@@ -1,17 +1,25 @@
 {
-  "_note": "Canali TV italiani per gara, curato a mano (NON in alcuna API). Chiave = numero gara FIFA (1-104), stabile tra seed e openfootball. DAZN trasmette tutte le 104; RAI 1 le 35 in chiaro.",
-  "_formato2026": "104 gare: 1-72 gironi, 73-88 sedicesimi, 89-96 ottavi, 97-100 quarti, 101-102 semifinali, 103 finale 3°/4° posto, 104 finale.",
-  "_vincoloRai": "35 in chiaro su RAI 1: apertura + selezione gironi (17 tot), 6 sedicesimi, 4 ottavi, tutti i quarti (4), semifinali (2), finalina e finale.",
+  "_note": "Canali TV italiani. DAZN trasmette tutte le 104 gare; RAI 1 quelle in chiaro. Una gara e' in chiaro se la sua coppia di squadre compare in raiInChiaro (ordine indifferente). Codici = 3 lettere FIFA (vedi src/data/team-codes.ts). Aggiornare e' semplice: aggiungere una riga { \"home\": \"XXX\", \"away\": \"YYY\" }. Per i knockout, aggiungere le coppie quando il tabellone e' definito. Dopo la modifica: build + deploy; il service worker (skipWaiting) aggiorna i client alla riapertura, niente cache stale.",
   "channels": {
     "rai": { "canale": "RAI 1", "color": "#2D9E4A", "inChiaro": true },
     "dazn": { "canale": "DAZN", "color": "#1A1A1A", "inChiaro": false }
   },
   "raiInChiaro": [
-    1, 5, 8, 12, 16, 17, 24, 28, 33, 37, 39, 44, 48, 56, 64, 68, 72,
-    73, 76, 80, 84, 86, 88,
-    89, 91, 93, 95,
-    97, 98, 99, 100,
-    101, 102,
-    103, 104
+    { "home": "MEX", "away": "RSA", "d": "2026-06-11" },
+    { "home": "CAN", "away": "BIH", "d": "2026-06-12" },
+    { "home": "BRA", "away": "MAR", "d": "2026-06-14" },
+    { "home": "NED", "away": "JPN", "d": "2026-06-14" },
+    { "home": "BEL", "away": "EGY", "d": "2026-06-15" },
+    { "home": "FRA", "away": "SEN", "d": "2026-06-16" },
+    { "home": "ENG", "away": "CRO", "d": "2026-06-17" },
+    { "home": "SUI", "away": "BIH", "d": "2026-06-18" },
+    { "home": "USA", "away": "AUS", "d": "2026-06-19" },
+    { "home": "GER", "away": "CIV", "d": "2026-06-20" },
+    { "home": "BEL", "away": "IRN", "d": "2026-06-21" },
+    { "home": "ARG", "away": "AUT", "d": "2026-06-22" },
+    { "home": "ENG", "away": "GHA", "d": "2026-06-23" },
+    { "home": "SUI", "away": "CAN", "d": "2026-06-24" },
+    { "home": "ECU", "away": "GER", "d": "2026-06-25" },
+    { "home": "NOR", "away": "FRA", "d": "2026-06-26" }
   ]
 }
