@@ -216,6 +216,7 @@ function setFilter(f: Filter) {
 .card-mappa {
   position: relative;
   width: 100%;
+  font-family: 'Noto Sans', system-ui, -apple-system, sans-serif;
   background: #ffffff;
   border-radius: 30px;
   box-shadow: 0 24px 60px rgba(30, 40, 70, 0.13), 0 2px 6px rgba(30, 40, 70, 0.05);
@@ -230,11 +231,11 @@ function setFilter(f: Filter) {
   gap: 14px;
 }
 .head { display: flex; align-items: flex-start; justify-content: space-between; }
-.title { font-size: 29px; font-weight: 800; color: #1b2030; letter-spacing: -0.025em; line-height: 1.04; }
+.title { font-size: 29px; font-weight: 900; color: #1b2030; letter-spacing: -0.025em; line-height: 1.04; }
 .sub {
   margin-top: 7px;
   font-size: 13.5px;
-  font-weight: 600;
+  font-weight: 500;
   color: #9098a8;
   display: flex;
   align-items: center;
@@ -261,7 +262,7 @@ function setFilter(f: Filter) {
   align-items: center;
   box-shadow: 0 10px 24px rgba(27, 32, 48, 0.28);
 }
-.cnum { font-size: 25px; font-weight: 800; line-height: 1; }
+.cnum { font-size: 25px; font-weight: 900; line-height: 1; }
 .clbl { font-size: 9px; font-weight: 700; letter-spacing: 0.16em; color: #8c93a8; margin-top: 3px; }
 
 .naLbl {
@@ -280,7 +281,7 @@ function setFilter(f: Filter) {
 }
 
 .legend { display: flex; align-items: center; gap: 17px; padding-left: 2px; }
-.lg { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; color: #6b7280; }
+.lg { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; color: #6b7280; }
 .ld { width: 10px; height: 10px; border-radius: 50%; display: block; }
 
 .pills { display: flex; gap: 9px; flex-wrap: wrap; }
@@ -288,7 +289,7 @@ function setFilter(f: Filter) {
   padding: 9px 15px;
   border-radius: 999px;
   font-family: inherit;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 12.5px;
   letter-spacing: 0.01em;
   cursor: pointer;
