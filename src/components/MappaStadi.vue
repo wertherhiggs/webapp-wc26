@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 /**
  * Infografica animata "Stadi e città" (Mondiali 2026).
@@ -120,6 +120,17 @@ onUnmounted(() => { clearTimeout(t0); clearInterval(iv) })
 const dim = (code: 'CAN' | 'USA' | 'MEX') =>
   props.modelValue === 'all' || props.modelValue === code ? 1 : 0.16
 
+// n. sedi per paese (fisso) + contatore mostrato: animato su "Tutti",
+// numero del paese selezionato sui filtri nazione.
+const counts = geo.dots.reduce(
+  (m, d) => { m[d.code]++; return m },
+  { CAN: 0, USA: 0, MEX: 0 } as Record<'CAN' | 'USA' | 'MEX', number>,
+)
+const displayCount = computed(() =>
+  props.modelValue === 'all' ? counter.value : counts[props.modelValue],
+)
+const isPulsing = (code: 'CAN' | 'USA' | 'MEX') => props.modelValue === code
+
 function setFilter(f: Filter) {
   emit('update:modelValue', f)
 }
@@ -159,7 +170,7 @@ function setFilter(f: Filter) {
             </g>
           </g>
 
-          <g v-for="d in geo.dots" :key="d.name" class="dot" :style="{ opacity: dim(d.code) }">
+          <g v-for="d in geo.dots" :key="d.name" class="dot" :class="{ pulse: isPulsing(d.code) }" :style="{ opacity: dim(d.code) }">
             <circle class="ping" :cx="d.cx" :cy="d.cy" r="9" fill="none" :stroke="d.color" stroke-width="3" :style="{ animationDelay: d.delay }" />
             <circle class="pop" :cx="d.cx" :cy="d.cy" r="9" :fill="d.color" stroke="#ffffff" stroke-width="2.6" :style="{ animationDelay: d.delay }" />
           </g>
@@ -167,15 +178,15 @@ function setFilter(f: Filter) {
 
         <!-- contatore -->
         <div class="counter rise" style="animation-delay:1.25s">
-          <span class="cnum">{{ counter }}</span>
+          <span class="cnum">{{ displayCount }}</span>
           <span class="clbl">SEDI</span>
         </div>
+      </div>
 
-        <!-- etichetta -->
-        <div class="naLbl rise" style="animation-delay:3.5s">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" fill="#6b7280" /><circle cx="12" cy="10" r="2.4" fill="#fff" /></svg>
-          NORD AMERICA
-        </div>
+      <!-- etichetta (fuori dalla mappa) -->
+      <div class="naLbl rise" style="animation-delay:3.5s">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z" fill="#6b7280" /><circle cx="12" cy="10" r="2.4" fill="#fff" /></svg>
+        NORD AMERICA
       </div>
 
       <!-- legenda -->
@@ -254,10 +265,8 @@ function setFilter(f: Filter) {
 .clbl { font-size: 9px; font-weight: 700; letter-spacing: 0.16em; color: #8c93a8; margin-top: 3px; }
 
 .naLbl {
-  position: absolute;
-  left: 14px;
-  bottom: 14px;
-  background: rgba(255, 255, 255, 0.92);
+  align-self: flex-start;
+  background: #f1f3f7;
   border: 1px solid #e6eaf0;
   color: #414a5a;
   font-size: 10.5px;
@@ -265,7 +274,6 @@ function setFilter(f: Filter) {
   letter-spacing: 0.13em;
   padding: 7px 13px;
   border-radius: 999px;
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
   display: flex;
   align-items: center;
   gap: 7px;
@@ -321,6 +329,8 @@ function setFilter(f: Filter) {
 @keyframes popDot { 0% { transform: scale(0); } 62% { transform: scale(1.22); } 100% { transform: scale(1); } }
 @keyframes pingDot { 0% { transform: scale(0.7); opacity: 0.5; } 80% { opacity: 0.04; } 100% { transform: scale(3); opacity: 0; } }
 @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes pulseDot { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.45); } }
+.dot.pulse { animation: pulseDot 1.1s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 .revealC { animation: revealC 0.7s cubic-bezier(0.22, 0.7, 0.2, 1) both; transform-box: fill-box; transform-origin: center; }
 .pop { animation: popDot 0.55s cubic-bezier(0.34, 1.56, 0.46, 1) both; transform-box: fill-box; transform-origin: center; }
 .ping { animation: pingDot 0.9s ease-out both; transform-box: fill-box; transform-origin: center; }
@@ -328,5 +338,6 @@ function setFilter(f: Filter) {
 
 @media (prefers-reduced-motion: reduce) {
   .revealC, .pop, .ping, .rise { animation-duration: 0.001s; }
+  .dot.pulse { animation: none; }
 }
 </style>

@@ -15,6 +15,11 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,json,woff2}'],
         navigateFallback: 'index.html',
+        // Il nuovo SW prende il controllo subito e cancella i precache vecchi:
+        // evita richieste a chunk hashati non più esistenti (404).
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true,
         runtimeCaching: [
           {
             // dati pubblici (openfootball) — network-first con fallback cache
