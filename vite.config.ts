@@ -39,8 +39,8 @@ export default defineConfig({
         description:
           'Calendario, risultati, classifiche e tabellone della FIFA World Cup 2026 con orario italiano e canale TV.',
         lang: 'it',
-        theme_color: '#111111',
-        background_color: '#F8F7F2',
+        theme_color: '#16245C',
+        background_color: '#0A1230',
         display: 'standalone',
         orientation: 'portrait',
         start_url: './',

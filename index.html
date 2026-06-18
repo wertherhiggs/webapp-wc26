@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#111111" />
+    <meta name="theme-color" content="#16245C" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -18,6 +19,73 @@
     />
   </head>
   <body>
+    <!-- World Cup 2026 — splash di avvio (si dissolve quando l'app è pronta) -->
+    <div id="wc2026-splash" role="status" aria-label="Caricamento Mondiali 2026">
+      <div class="wc-mark">
+        <svg viewBox="0 0 100 100" width="100%" height="100%" aria-hidden="true">
+          <g fill="none" stroke-width="5" stroke-linecap="round">
+            <circle class="wc-arc wc-arc1" cx="50" cy="50" r="43" stroke="#E5484D" stroke-dasharray="82 188" />
+            <circle class="wc-arc wc-arc2" cx="50" cy="50" r="43" stroke="#30A46C" stroke-dasharray="82 188" />
+            <circle class="wc-arc wc-arc3" cx="50" cy="50" r="43" stroke="#5B9DF6" stroke-dasharray="82 188" />
+          </g>
+          <g transform="translate(50,50) scale(0.5) translate(-50,-50)">
+            <circle cx="50" cy="50" r="37" fill="#fff" />
+            <polygon points="50,35 64.27,45.36 58.82,62.14 41.18,62.14 35.73,45.36" fill="#15224A" />
+            <g stroke="#15224A" stroke-width="2.6" stroke-linecap="round">
+              <line x1="50" y1="35" x2="50" y2="14" /><line x1="64.27" y1="45.36" x2="84.24" y2="38.88" />
+              <line x1="58.82" y1="62.14" x2="71.17" y2="79.12" /><line x1="41.18" y1="62.14" x2="28.83" y2="79.12" />
+              <line x1="35.73" y1="45.36" x2="15.76" y2="38.88" />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="wc-word">mondiali <b>2026</b></div>
+      <div class="wc-hosts">USA · CANADA · MÉXICO</div>
+      <div class="wc-dots"><i></i><i></i><i></i></div>
+    </div>
+    <style>
+      #wc2026-splash {
+        position: fixed; inset: 0; z-index: 9999; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 30px;
+        background: radial-gradient(120% 80% at 50% 38%, #1a2a66 0%, #0a1230 72%);
+        font-family: 'Noto Sans', system-ui, -apple-system, sans-serif;
+        transition: opacity 0.45s ease;
+      }
+      #wc2026-splash.wc-hide { opacity: 0; pointer-events: none; }
+      #wc2026-splash .wc-mark { width: 38vw; max-width: 200px; aspect-ratio: 1; }
+      #wc2026-splash .wc-arc { transform-box: fill-box; transform-origin: center; }
+      #wc2026-splash .wc-arc1 { animation: wcSpinCW 9s linear infinite; }
+      #wc2026-splash .wc-arc2 { animation: wcSpinCCW 12s linear infinite; }
+      #wc2026-splash .wc-arc3 { animation: wcSpinCW 7s linear infinite; }
+      #wc2026-splash .wc-word { font-size: 26px; font-weight: 400; letter-spacing: 0.04em; color: #fff; }
+      #wc2026-splash .wc-word b { font-weight: 900; }
+      #wc2026-splash .wc-hosts {
+        font-family: ui-monospace, 'SFMono-Regular', monospace; font-size: 10px;
+        letter-spacing: 0.24em; color: #8da0d8;
+      }
+      #wc2026-splash .wc-dots { position: absolute; bottom: 14vh; display: flex; gap: 10px; }
+      #wc2026-splash .wc-dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+      #wc2026-splash .wc-dots i:nth-child(1) { background: #e5484d; animation: wcDot 1.2s ease-in-out infinite; }
+      #wc2026-splash .wc-dots i:nth-child(2) { background: #30a46c; animation: wcDot 1.2s ease-in-out 0.2s infinite; }
+      #wc2026-splash .wc-dots i:nth-child(3) { background: #5b9df6; animation: wcDot 1.2s ease-in-out 0.4s infinite; }
+      @keyframes wcSpinCW { to { transform: rotate(360deg); } }
+      @keyframes wcSpinCCW { to { transform: rotate(-360deg); } }
+      @keyframes wcDot { 0%, 100% { opacity: 0.25; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-4px); } }
+      @media (prefers-reduced-motion: reduce) {
+        #wc2026-splash .wc-arc, #wc2026-splash .wc-dots i { animation: none; }
+      }
+    </style>
+    <script>
+      window.hideWC2026Splash = function () {
+        var el = document.getElementById('wc2026-splash')
+        if (!el) return
+        el.classList.add('wc-hide')
+        setTimeout(function () { el.remove() }, 500)
+      }
+      // Fallback: se l'app non segnala "pronta", nasconde comunque al load.
+      window.addEventListener('load', function () { setTimeout(window.hideWC2026Splash, 1200) })
+    </script>
+
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>

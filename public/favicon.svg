@@ -1,5 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#111111"/>
-  <circle cx="32" cy="32" r="17" fill="none" stroke="#F4C94B" stroke-width="3"/>
-  <path d="M32 21l6 4.4-2.3 7.1h-7.4L26 25.4z" fill="#F4C94B"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 100 100" role="img" aria-label="World Cup 2026 app icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1A2A66"></stop>
+      <stop offset="1" stop-color="#0A1230"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" fill="url(#bg)"></rect>
+  <g fill="none" stroke-width="5.5" stroke-linecap="round">
+    <circle cx="50" cy="50" r="42" stroke="#E5484D" stroke-dasharray="80 184" transform="rotate(-90 50 50)"></circle>
+    <circle cx="50" cy="50" r="42" stroke="#30A46C" stroke-dasharray="80 184" transform="rotate(30 50 50)"></circle>
+    <circle cx="50" cy="50" r="42" stroke="#5B9DF6" stroke-dasharray="80 184" transform="rotate(150 50 50)"></circle>
+  </g>
+  <g transform="translate(50,50) scale(0.52) translate(-50,-50)">
+    <circle cx="50" cy="50" r="37" fill="#ffffff"></circle>
+    <polygon points="50,35 64.27,45.36 58.82,62.14 41.18,62.14 35.73,45.36" fill="#15224A"></polygon>
+    <g stroke="#15224A" stroke-width="2.6" stroke-linecap="round">
+      <line x1="50" y1="35" x2="50" y2="14"></line>
+      <line x1="64.27" y1="45.36" x2="84.24" y2="38.88"></line>
+      <line x1="58.82" y1="62.14" x2="71.17" y2="79.12"></line>
+      <line x1="41.18" y1="62.14" x2="28.83" y2="79.12"></line>
+      <line x1="35.73" y1="45.36" x2="15.76" y2="38.88"></line>
+    </g>
+  </g>
 </svg>
