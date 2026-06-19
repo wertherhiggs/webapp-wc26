@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import TeamFlag from '@/components/TeamFlag.vue'
+import SegmentedControl from '@/components/SegmentedControl.vue'
 import { useMatchesStore } from '@/stores/matches'
 import { usePredictionsStore } from '@/stores/predictions'
 import { getTv } from '@/data/tv'
@@ -14,6 +15,12 @@ const predictions = usePredictionsStore()
 const toPredict = computed(() => matches.scheduledMatches)
 const history = computed(() => predictions.buildHistory(matches.matches))
 const total = computed(() => history.value.reduce((s, h) => s + h.pts, 0))
+
+const tab = ref<'todo' | 'storico'>('todo')
+const segOptions = computed(() => [
+  { key: 'todo', label: `Da pronosticare (${toPredict.value.length})` },
+  { key: 'storico', label: `Storico (${history.value.length})` },
+])
 
 const tagColor = (tag: string) =>
   tag === 'Esatto' ? 'var(--lime)' : tag === 'Risultato' ? 'var(--turq)' : 'var(--muted)'
@@ -35,8 +42,9 @@ const tagColor = (tag: string) =>
       </div>
     </div>
 
-    <h2 class="h2 sec">{{ $t('pronostici.toPredict') }}</h2>
-    <div class="list">
+    <SegmentedControl v-model="tab" :options="segOptions" class="seg" />
+
+    <div v-show="tab === 'todo'" class="list">
       <div v-for="m in toPredict" :key="m.id" class="pc card">
         <div class="phd">
           <span class="label">{{ romeTime(m.kickoff) }} · {{ getTv(m).canale }}</span>
@@ -71,8 +79,8 @@ const tagColor = (tag: string) =>
       <p v-if="toPredict.length === 0" class="muted none">Nessuna gara da pronosticare.</p>
     </div>
 
-    <h2 class="h2 sec">{{ $t('pronostici.history') }}</h2>
-    <div v-if="history.length" class="card hist">
+    <div v-show="tab === 'storico'" class="storico">
+      <div v-if="history.length" class="card hist">
       <div v-for="h in history" :key="h.matchId" class="hrow">
         <div><div class="hlabel">{{ h.label }}</div><div class="muted hyou">{{ h.you }}</div></div>
         <div class="hr">
@@ -81,13 +89,15 @@ const tagColor = (tag: string) =>
         </div>
       </div>
     </div>
-    <div v-else class="card emptybox muted">Ancora nessun pronostico valutato.</div>
+      <div v-else class="card emptybox muted">Ancora nessun pronostico valutato.</div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .title { padding: 8px 2px 14px; }
 .sec { margin: 0 2px 12px; }
+.seg { margin-bottom: 16px; }
 .scorecard {
   background: var(--viola);
   border-radius: var(--r-card);

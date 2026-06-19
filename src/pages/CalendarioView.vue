@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import MatchCard from '@/components/MatchCard.vue'
 import ChipFiltro from '@/components/ChipFiltro.vue'
 import ToggleSwitch from '@/components/ToggleSwitch.vue'
 import { useMatchesStore } from '@/stores/matches'
+import { useUiStore } from '@/stores/ui'
 import { getTv } from '@/data/tv'
 import { romeDayKey, romeDayLabel, todayKey } from '@/services/time'
 import type { Match } from '@/types'
 
 const matches = useMatchesStore()
-const group = ref<string>('all')
-const status = ref<'all' | 'today' | 'todo' | 'done'>('all')
-const raiOnly = ref(false)
+// Filtri tenuti nello store UI: sopravvivono al rientro dal dettaglio partita.
+const { calGroup: group, calStatus: status, calRaiOnly: raiOnly } = storeToRefs(useUiStore())
 
 const statusChips: { key: typeof status.value; label: string }[] = [
   { key: 'all', label: 'Tutte' },
