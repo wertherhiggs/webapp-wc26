@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, watch } from 'vue'
 import BottomNav from '@/components/BottomNav.vue'
+import IosInstallBanner from '@/components/IosInstallBanner.vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useMatchesStore } from '@/stores/matches'
 import { useFavoritesStore } from '@/stores/favorites'
@@ -54,6 +55,7 @@ watch(
         <div v-else class="loading">Caricamento…</div>
       </div>
     </main>
+    <IosInstallBanner />
     <BottomNav />
   </div>
 </template>
