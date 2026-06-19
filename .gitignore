@@ -14,3 +14,6 @@ DESIGN-PROMPT.md
 
 # Cache incrementale TypeScript
 *.tsbuildinfo
+
+# Config preview locale Claude Code (path assoluto, specifico per macchina)
+.claude/launch.json
