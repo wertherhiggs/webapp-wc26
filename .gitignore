@@ -6,3 +6,11 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 *.log
+/prototipo web app world cup 2026
+
+# Guida/prompt interni (non necessari a build/deploy)
+CLAUDE.md
+DESIGN-PROMPT.md
+
+# Cache incrementale TypeScript
+*.tsbuildinfo
