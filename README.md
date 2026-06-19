@@ -146,5 +146,8 @@ public/          # manifest, icone PWA, favicon
 - Dati calendario/risultati: openfootball (dominio pubblico). Foto stadi: Wikimedia Commons.
 - Progetto **non ufficiale**, senza alcuna affiliazione con la FIFA; nomi e marchi appartengono ai
   rispettivi proprietari.
-- Codice fornito a scopo dimostrativo/educativo. Aggiungi una licenza (es. MIT) se intendi
-  consentirne esplicitamente il riuso.
+
+## Licenza
+
+Distribuito con licenza **MIT** — vedi [`LICENSE`](LICENSE). Sei libero di usare, modificare e
+ridistribuire il codice; i dati di terze parti restano soggetti alle rispettive licenze.
