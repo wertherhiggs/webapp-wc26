@@ -19,11 +19,6 @@ export interface FlagSpec {
   raw?: string
 }
 
-export interface Channel {
-  name: string
-  color: string
-}
-
 export type EventKind = 'goal' | 'own_goal' | 'penalty' | 'yellow' | 'red' | 'sub'
 export type EventSide = 'home' | 'away'
 

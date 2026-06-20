@@ -3,9 +3,10 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import TeamFlag from './TeamFlag.vue'
 import { getTv } from '@/data/tv'
-import { countdownTo, pad2, romeShortDay, romeTime } from '@/services/time'
+import { countdownTo, romeShortDay, romeTime } from '@/services/time'
 import { teamName } from '@/data/teams'
 import type { Match } from '@/types'
+const pad2 = (n: number) => String(n).padStart(2, '0')
 
 const props = defineProps<{ match: Match; favTeam: string }>()
 const router = useRouter()

@@ -48,16 +48,6 @@ export function todayKey(now = new Date()): string {
   return romeDayKey(now.toISOString())
 }
 
-/** L'ora di Roma è notturna (>=22 o <6)? Per il badge giorno/notte. */
-export function isNight(iso: string): boolean {
-  const hour = Number(
-    new Intl.DateTimeFormat('it-IT', { timeZone: TZ, hour: '2-digit', hour12: false }).format(
-      new Date(iso),
-    ),
-  )
-  return hour >= 22 || hour < 6
-}
-
 export interface Countdown {
   total: number
   days: number
@@ -76,4 +66,3 @@ export function countdownTo(iso: string, now = Date.now()): Countdown {
   return { total, days, hours, minutes, seconds }
 }
 
-export const pad2 = (n: number): string => String(n).padStart(2, '0')
