@@ -20,6 +20,11 @@
     { "home": "ENG", "away": "GHA", "d": "2026-06-23" },
     { "home": "SUI", "away": "CAN", "d": "2026-06-24" },
     { "home": "ECU", "away": "GER", "d": "2026-06-25" },
-    { "home": "NOR", "away": "FRA", "d": "2026-06-26" }
+    { "home": "NOR", "away": "FRA", "d": "2026-06-26" },
+
+    { "home": "CRO", "away": "GHA", "d": "2026-06-27" },
+    { "home": "RSA", "away": "CAN", "d": "2026-06-28" },
+    { "home": "BRA", "away": "JPN", "d": "2026-06-29" },
+    { "home": "CIV", "away": "NOR", "d": "2026-06-30" }
   ]
 }
