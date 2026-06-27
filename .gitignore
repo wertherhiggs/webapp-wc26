@@ -4,6 +4,7 @@ dist-ssr
 *.local
 .DS_Store
 .vscode/*
+.idea/*
 !.vscode/extensions.json
 *.log
 /prototipo web app world cup 2026
